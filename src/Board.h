@@ -11,7 +11,10 @@ private:
 	sf::CircleShape m_points[BOARD_SIZE_X][BOARD_SIZE_Y];
 
 	void initPoints();
+	void drawPoints(sf::RenderWindow* hWindow);
 
 public:
 	Board();
+
+	void drawBoard(sf::RenderWindow* hWindow);
 };
