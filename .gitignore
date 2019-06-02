@@ -328,3 +328,6 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+# ignore .pdb SFML files
+!/lib/SFML-2.5.1/lib/*.pdb
