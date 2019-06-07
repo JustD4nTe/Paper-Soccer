@@ -2,7 +2,6 @@
 #include "Board.h"
 
 #define DISTANCE_BEETWEN_POINTS 50
-#define POINT_RADIUS 5
 #define MARGIN 100
 #define GATE_SIZE 2
 
@@ -10,12 +9,24 @@
 
 Board::Board() {
 	initPoints();
+	initHoverPoint();
 	initFrame();
 }
 
 void Board::drawBoard(sf::RenderWindow* hWindow) {
 	drawFrame(hWindow);
 	drawPoints(hWindow);
+		
+	// it useless to draw o shape when it have a negative coords
+	if (m_hoverPoint.getPosition().x != -20)
+		hWindow->draw(m_hoverPoint);
+}
+
+sf::Vector2f Board::getPointPosition(const unsigned x, const unsigned y) {
+	if (BOARD_SIZE_X < x || BOARD_SIZE_Y < y)
+		return sf::Vector2f();
+
+	return m_points[x][y].getPosition();
 }
 
 #pragma endregion
@@ -82,6 +93,18 @@ void Board::initFrame() {
 	m_frame.setPoint(11, sf::Vector2f(MARGIN + POINT_RADIUS, BOTTOM_ENDlINE_Y));
 }
 
+void Board::initHoverPoint() {
+	m_hoverPoint = sf::CircleShape(POINT_RADIUS * 2);
+
+	// it should only over-line a point
+	m_hoverPoint.setFillColor(sf::Color::Transparent);
+	m_hoverPoint.setOutlineColor(sf::Color::Magenta);
+	m_hoverPoint.setOutlineThickness(2);
+
+	// at start we don't want to see that circle
+	toggleHoverPoint();
+}
+
 // Draws all points
 void Board::drawPoints(sf::RenderWindow* hWindow) {
 	for (unsigned y = 0; y < BOARD_SIZE_Y; ++y) {
@@ -95,4 +118,5 @@ void Board::drawPoints(sf::RenderWindow* hWindow) {
 void Board::drawFrame(sf::RenderWindow* hWindow) {
 	hWindow->draw(m_frame);
 }
+
 #pragma endregion

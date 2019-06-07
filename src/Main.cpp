@@ -16,6 +16,9 @@ int main(){
 			if (event.type == sf::Event::Closed)
 				mainWindow.close();
 		}
+
+		game.hoverPoint(sf::Mouse::getPosition(mainWindow));
+
 		mainWindow.clear();
 		game.draw(mainWindow);
 		mainWindow.display();
