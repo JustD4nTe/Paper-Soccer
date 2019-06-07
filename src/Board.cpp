@@ -39,7 +39,7 @@ void Board::initPoints() {
 	}
 }
 
-// Initilaze frame with 12 corners
+// Initialize frame with 12 corners
 // it should looks like a football pitch
 void Board::initFrame() {
 	// Some math's magic to have scalable board
