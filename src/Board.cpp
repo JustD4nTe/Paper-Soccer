@@ -115,7 +115,12 @@ void Board::initBall() {
 
 void Board::initLines() {
 	m_lines = sf::VertexArray(sf::PrimitiveType::LineStrip);
-	m_lines.append(sf::Vertex(m_ballPosition));
+
+	m_lines.append(sf::Vertex(sf::Vector2f(
+							m_ballPosition.x + POINT_RADIUS, 
+							m_ballPosition.y + POINT_RADIUS))
+	);
+
 	m_lines[0].color = sf::Color::Cyan;
 }
 
