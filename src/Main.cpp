@@ -22,10 +22,8 @@ int main(){
 		}
 
 		game.hoverPoint(sf::Mouse::getPosition(mainWindow));
-
-		mainWindow.clear();
+				
 		game.draw(mainWindow);
-		mainWindow.display();
 	}
 
 	return 0;

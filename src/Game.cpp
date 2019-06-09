@@ -1,7 +1,9 @@
 #include "Game.h"
 
 void Game::draw(sf::RenderWindow& mWindow) {
+	mWindow.clear();
 	m_board.drawBoard(&mWindow);
+	mWindow.display();
 }
 
 // Setting an over-line circle around the point, which mouse is touching (mrrr :)) )
