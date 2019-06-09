@@ -32,6 +32,17 @@ sf::Vector2f Board::getPointPosition(const unsigned x, const unsigned y) {
 	return m_points[x][y].getPosition();
 }
 
+void Board::movingTheBall(const sf::Vector2f newPositionOfBall) {
+	m_ballPosition = newPositionOfBall;
+
+	m_lines.append(sf::Vertex(
+		sf::Vector2f(
+			newPositionOfBall.x + POINT_RADIUS,
+			newPositionOfBall.y + POINT_RADIUS)
+		, sf::Color::Cyan)
+	);
+}
+
 #pragma endregion
 
 #pragma region Private
@@ -142,16 +153,4 @@ void Board::drawFrame(sf::RenderWindow* hWindow) {
 }
 
 #pragma endregion
-
-void Board::movingTheBall(const sf::Vector2f newPositionOfBall) {
-	m_ballPosition = newPositionOfBall;
-
-	m_lines.append(sf::Vertex(
-		sf::Vector2f(
-			newPositionOfBall.x + POINT_RADIUS,
-			newPositionOfBall.y + POINT_RADIUS)
-		, sf::Color::Cyan)
-	);
-}
-
 #pragma endregion

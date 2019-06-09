@@ -31,7 +31,9 @@ public:
 
 	void drawBoard(sf::RenderWindow* hWindow);
 	sf::Vector2f getPointPosition(const unsigned x, const unsigned y);
+	void movingTheBall(const sf::Vector2f newPositionOfBall);
 
+	
 	void toggleHoverPoint(sf::Vector2f pos = sf::Vector2f(-20, -20)) {
 		m_hoverPoint.setPosition(pos);
 	}
@@ -39,7 +41,4 @@ public:
 	sf::Vector2f getBallPosition() {
 		return m_ballPosition;
 	}
-
-	void movingTheBall(const sf::Vector2f newPositionOfBall);
-	
 };
