@@ -15,11 +15,13 @@ private:
 	sf::CircleShape m_hoverPoint;
 	sf::ConvexShape m_frame;
 	sf::Vector2f m_ballPosition;
+	sf::VertexArray m_lines;
 
 	void initPoints();
 	void initFrame();
 	void initHoverPoint();
 	void initBall();
+	void initLines();
 
 	void drawPoints(sf::RenderWindow* hWindow);
 	void drawFrame(sf::RenderWindow* hWindow);
@@ -37,4 +39,7 @@ public:
 	sf::Vector2f getBallPosition() {
 		return m_ballPosition;
 	}
+
+	void movingTheBall(const sf::Vector2f newPositionOfBall);
+	
 };

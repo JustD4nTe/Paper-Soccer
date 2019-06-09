@@ -15,6 +15,10 @@ int main(){
 		while (mainWindow.pollEvent(event))		{
 			if (event.type == sf::Event::Closed)
 				mainWindow.close();
+
+			if(event.key.code == sf::Mouse::Left){
+				game.move(sf::Mouse::getPosition(mainWindow));
+			}
 		}
 
 		game.hoverPoint(sf::Mouse::getPosition(mainWindow));

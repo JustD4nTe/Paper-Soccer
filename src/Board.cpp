@@ -11,11 +11,14 @@ Board::Board() {
 	initHoverPoint();
 	initFrame();
 	initBall();
+	initLines();
 }
 
 void Board::drawBoard(sf::RenderWindow* hWindow) {
 	drawFrame(hWindow);
 	drawPoints(hWindow);
+
+	hWindow->draw(m_lines);
 		
 	// it useless to draw o shape when it have a negative coords
 	if (m_hoverPoint.getPosition().x != -20)
@@ -110,6 +113,12 @@ void Board::initBall() {
 	m_ballPosition = m_points[(BOARD_SIZE_X - 1) / 2][(BOARD_SIZE_Y - 1) / 2].getPosition();
 }
 
+void Board::initLines() {
+	m_lines = sf::VertexArray(sf::PrimitiveType::LineStrip);
+	m_lines.append(sf::Vertex(m_ballPosition));
+	m_lines[0].color = sf::Color::Cyan;
+}
+
 #pragma endregion
 #pragma region Draw
 
@@ -128,4 +137,16 @@ void Board::drawFrame(sf::RenderWindow* hWindow) {
 }
 
 #pragma endregion
+
+void Board::movingTheBall(const sf::Vector2f newPositionOfBall) {
+	m_ballPosition = newPositionOfBall;
+
+	m_lines.append(sf::Vertex(
+		sf::Vector2f(
+			newPositionOfBall.x + POINT_RADIUS,
+			newPositionOfBall.y + POINT_RADIUS)
+		, sf::Color::Cyan)
+	);
+}
+
 #pragma endregion
