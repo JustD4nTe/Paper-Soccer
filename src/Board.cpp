@@ -1,7 +1,6 @@
 #pragma once
 #include "Board.h"
 
-#define DISTANCE_BEETWEN_POINTS 50
 #define MARGIN 100
 #define GATE_SIZE 2
 
@@ -11,6 +10,7 @@ Board::Board() {
 	initPoints();
 	initHoverPoint();
 	initFrame();
+	initBall();
 }
 
 void Board::drawBoard(sf::RenderWindow* hWindow) {
@@ -32,6 +32,7 @@ sf::Vector2f Board::getPointPosition(const unsigned x, const unsigned y) {
 #pragma endregion
 
 #pragma region Private
+#pragma region Init
 
 void Board::initPoints() {
 	sf::CircleShape* tempCirc;
@@ -105,6 +106,13 @@ void Board::initHoverPoint() {
 	toggleHoverPoint();
 }
 
+void Board::initBall() {
+	m_ballPosition = m_points[(BOARD_SIZE_X - 1) / 2][(BOARD_SIZE_Y - 1) / 2].getPosition();
+}
+
+#pragma endregion
+#pragma region Draw
+
 // Draws all points
 void Board::drawPoints(sf::RenderWindow* hWindow) {
 	for (unsigned y = 0; y < BOARD_SIZE_Y; ++y) {
@@ -119,4 +127,5 @@ void Board::drawFrame(sf::RenderWindow* hWindow) {
 	hWindow->draw(m_frame);
 }
 
+#pragma endregion
 #pragma endregion
