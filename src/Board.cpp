@@ -1,9 +1,6 @@
 #pragma once
 #include "Board.h"
 
-#define MARGIN 100
-#define GATE_SIZE 2
-
 #pragma region Public
 
 Board::Board() {

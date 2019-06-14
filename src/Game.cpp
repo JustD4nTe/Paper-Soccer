@@ -58,17 +58,22 @@ sf::Vector2f Game::availableMove(const sf::Vector2i mousePos) {
 				continue;
 
 			// is current point into square of available move?
-			if ((tempPointPos.x >= left && tempPointPos.x <= right)
-				&& (tempPointPos.y >= up && tempPointPos.y <= down)) {
+			if (((tempPointPos.x >= left && tempPointPos.x <= right)
+				&& (tempPointPos.y >= up && tempPointPos.y <= down))) {
 
-				// we used circle equation 
-				// to check mouse position with current point
-				if (std::pow((mousePos.x - tempPointPos.x), 2)
-					+ std::pow((mousePos.y - tempPointPos.y), 2)
-					<= std::pow((POINT_RADIUS + 2), 3)) {
-						
+				// player shouldn't move on the edge of football pitch
+				if (!(ballPosition.x == MARGIN && tempPointPos.x == ballPosition.x)
+					&& !(ballPosition.y == MARGIN && tempPointPos.y == ballPosition.y)) {
+
+					// We used circle equation 
+					// to check mouse position with current point
+					if (std::pow((mousePos.x - tempPointPos.x), 2)
+						+ std::pow((mousePos.y - tempPointPos.y), 2)
+						<= std::pow(HOVER_POINT_RADIUS, 2)) {
+
 						// return point which is available to the player
 						return tempPointPos;
+					}
 				}
 			}
 		}
