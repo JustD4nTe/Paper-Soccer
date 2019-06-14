@@ -37,8 +37,8 @@ void Board::movingTheBall(const sf::Vector2f newPositionOfBall) {
 
 	m_lines.append(sf::Vertex(
 		sf::Vector2f(
-			newPositionOfBall.x + POINT_RADIUS,
-			newPositionOfBall.y + POINT_RADIUS)
+			newPositionOfBall.x,
+			newPositionOfBall.y)
 		, sf::Color::Cyan)
 	);
 }
@@ -57,6 +57,9 @@ void Board::initPoints() {
 			// Create new point
 			*tempCirc = sf::CircleShape(POINT_RADIUS);
 			tempCirc->setFillColor(sf::Color::Green);
+
+			// set new center
+			tempCirc->setOrigin(POINT_RADIUS, POINT_RADIUS);
 			tempCirc->setPosition(
 				(x * DISTANCE_BEETWEN_POINTS) + MARGIN,
 				(y * DISTANCE_BEETWEN_POINTS) + MARGIN
@@ -70,29 +73,29 @@ void Board::initPoints() {
 void Board::initFrame() {
 	// Some math's magic to have scalable board
 	const float GATE_LEFT_CORNER_POINT_X =
-		(((BOARD_SIZE_X - 1) / 2) - 1) * DISTANCE_BEETWEN_POINTS + MARGIN + POINT_RADIUS;
+		(((BOARD_SIZE_X - 1) / 2) - 1) * DISTANCE_BEETWEN_POINTS + MARGIN;
 
 	const float GATE_RIGHT_CORNER_POINT_X = 
 		GATE_LEFT_CORNER_POINT_X + DISTANCE_BEETWEN_POINTS * GATE_SIZE;
 
 	const float RIGHT_CORNER_X = 
-		MARGIN + POINT_RADIUS + DISTANCE_BEETWEN_POINTS * (BOARD_SIZE_X - 1);
+		MARGIN + DISTANCE_BEETWEN_POINTS * (BOARD_SIZE_X - 1);
 
-	const float UPPER_ENDLINE_Y = MARGIN + POINT_RADIUS;
-	const float UPPER_GATELINE_Y = (MARGIN - DISTANCE_BEETWEN_POINTS) + POINT_RADIUS;
+	const float UPPER_ENDLINE_Y = MARGIN;
+	const float UPPER_GATELINE_Y = (MARGIN - DISTANCE_BEETWEN_POINTS);
 
 	const float BOTTOM_ENDlINE_Y =
-		MARGIN + POINT_RADIUS + DISTANCE_BEETWEN_POINTS * (BOARD_SIZE_Y - 1);
+		MARGIN + DISTANCE_BEETWEN_POINTS * (BOARD_SIZE_Y - 1);
 
 	const float BOTTOM_GATELINE_Y = 
-		MARGIN + POINT_RADIUS + DISTANCE_BEETWEN_POINTS * BOARD_SIZE_Y;
+		MARGIN + DISTANCE_BEETWEN_POINTS * BOARD_SIZE_Y;
 
 
 	m_frame = sf::ConvexShape(12);
 
 
 	// Upper set of corners
-	m_frame.setPoint(0, sf::Vector2f(MARGIN + POINT_RADIUS, UPPER_ENDLINE_Y));
+	m_frame.setPoint(0, sf::Vector2f(MARGIN, UPPER_ENDLINE_Y));
 	m_frame.setPoint(1, sf::Vector2f(GATE_LEFT_CORNER_POINT_X, UPPER_ENDLINE_Y));
 	m_frame.setPoint(2, sf::Vector2f(GATE_LEFT_CORNER_POINT_X, UPPER_GATELINE_Y));
 	m_frame.setPoint(3, sf::Vector2f(GATE_RIGHT_CORNER_POINT_X, UPPER_GATELINE_Y));
@@ -105,7 +108,7 @@ void Board::initFrame() {
 	m_frame.setPoint(8, sf::Vector2f(GATE_RIGHT_CORNER_POINT_X, BOTTOM_GATELINE_Y));
 	m_frame.setPoint(9, sf::Vector2f(GATE_LEFT_CORNER_POINT_X, BOTTOM_GATELINE_Y));
 	m_frame.setPoint(10, sf::Vector2f(GATE_LEFT_CORNER_POINT_X, BOTTOM_ENDlINE_Y));
-	m_frame.setPoint(11, sf::Vector2f(MARGIN + POINT_RADIUS, BOTTOM_ENDlINE_Y));
+	m_frame.setPoint(11, sf::Vector2f(MARGIN, BOTTOM_ENDlINE_Y));
 }
 
 void Board::initHoverPoint() {
@@ -115,6 +118,9 @@ void Board::initHoverPoint() {
 	m_hoverPoint.setFillColor(sf::Color::Transparent);
 	m_hoverPoint.setOutlineColor(sf::Color::Magenta);
 	m_hoverPoint.setOutlineThickness(2);
+
+	// set center of the point
+	m_hoverPoint.setOrigin(POINT_RADIUS * 2, POINT_RADIUS * 2);
 
 	// at start we don't want to see that circle
 	toggleHoverPoint();
@@ -128,8 +134,8 @@ void Board::initLines() {
 	m_lines = sf::VertexArray(sf::PrimitiveType::LineStrip);
 
 	m_lines.append(sf::Vertex(sf::Vector2f(
-							m_ballPosition.x + POINT_RADIUS, 
-							m_ballPosition.y + POINT_RADIUS))
+							m_ballPosition.x, 
+							m_ballPosition.y))
 	);
 
 	m_lines[0].color = sf::Color::Cyan;

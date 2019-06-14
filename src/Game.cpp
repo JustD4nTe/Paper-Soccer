@@ -18,11 +18,6 @@ void Game::hoverPoint(const sf::Vector2i mousePos) {
 	if (point.x == 0 || point.y == 0)
 		return;
 
-	// set offset to this point
-	// for better displaying
-	point.y -= POINT_RADIUS;
-	point.x -= POINT_RADIUS;
-
 	m_board.toggleHoverPoint(point);
 }
 
@@ -66,13 +61,10 @@ sf::Vector2f Game::availableMove(const sf::Vector2i mousePos) {
 			if ((tempPointPos.x >= left && tempPointPos.x <= right)
 				&& (tempPointPos.y >= up && tempPointPos.y <= down)) {
 
-				// some weird math with SFML
-				// basically we used circle equation,
-				// but SFML did an awful joke to us and with no reason
-				// circle position isn't the center, but left-up corner
-				// WHY U DO THIS TO ME???
-				if (std::pow((mousePos.x - POINT_RADIUS - tempPointPos.x), 2)
-					+ std::pow((mousePos.y - POINT_RADIUS - tempPointPos.y), 2)
+				// we used circle equation 
+				// to check mouse position with current point
+				if (std::pow((mousePos.x - tempPointPos.x), 2)
+					+ std::pow((mousePos.y - tempPointPos.y), 2)
 					<= std::pow((POINT_RADIUS + 2), 3)) {
 						
 						// return point which is available to the player
