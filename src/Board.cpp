@@ -29,14 +29,13 @@ sf::Vector2f Board::getPointPosition(const unsigned x, const unsigned y) {
 	return m_points[x][y].getPosition();
 }
 
-void Board::movingTheBall(const sf::Vector2f newPositionOfBall) {
-	m_ballPosition = newPositionOfBall;
+void Board::movingTheBall(sf::Vector2f newPositionOfBall) {
+	Point* newBall = getPoint(newPositionOfBall);
+	m_ball.setNewBall(newBall);
 
 	m_lines.append(sf::Vertex(
-		sf::Vector2f(
-			newPositionOfBall.x,
-			newPositionOfBall.y)
-		, sf::Color::Cyan)
+		newBall->getPosition(), 
+		sf::Color::Cyan)
 	);
 }
 
@@ -52,7 +51,7 @@ void Board::initPoints() {
 			tempCirc = &m_points[x][y];
 
 			// Create new point
-			*tempCirc = sf::CircleShape(POINT_RADIUS);
+			*tempCirc = Point(POINT_RADIUS);
 			tempCirc->setFillColor(sf::Color::Green);
 
 			// set new center
@@ -124,16 +123,13 @@ void Board::initHoverPoint() {
 }
 
 void Board::initBall() {
-	m_ballPosition = m_points[(BOARD_SIZE_X - 1) / 2][(BOARD_SIZE_Y - 1) / 2].getPosition();
+	m_ball = Ball(&m_points[(BOARD_SIZE_X - 1) / 2][(BOARD_SIZE_Y - 1) / 2]);
 }
 
 void Board::initLines() {
 	m_lines = sf::VertexArray(sf::PrimitiveType::LineStrip);
 
-	m_lines.append(sf::Vertex(sf::Vector2f(
-							m_ballPosition.x, 
-							m_ballPosition.y))
-	);
+	m_lines.append(sf::Vertex(m_ball.getPosition()));
 
 	m_lines[0].color = sf::Color::Cyan;
 }
@@ -156,4 +152,16 @@ void Board::drawFrame(sf::RenderWindow* hWindow) {
 }
 
 #pragma endregion
+
+Point* Board::getPoint(const sf::Vector2f pointPos) {
+	for (unsigned y = 0; y < BOARD_SIZE_Y; ++y) {
+		for (unsigned x = 0; x < BOARD_SIZE_X; x++) {
+			if (m_points[x][y].getPosition() == pointPos)
+				return &m_points[x][y];
+		}
+	}
+
+	return new Point();
+}
+
 #pragma endregion

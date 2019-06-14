@@ -65,14 +65,17 @@ sf::Vector2f Game::availableMove(const sf::Vector2i mousePos) {
 				if (!(ballPosition.x == MARGIN && tempPointPos.x == ballPosition.x)
 					&& !(ballPosition.y == MARGIN && tempPointPos.y == ballPosition.y)) {
 
-					// We used circle equation 
-					// to check mouse position with current point
-					if (std::pow((mousePos.x - tempPointPos.x), 2)
-						+ std::pow((mousePos.y - tempPointPos.y), 2)
-						<= std::pow(HOVER_POINT_RADIUS, 2)) {
+					if (!isAnyLineBetweenPoints(ballPosition, tempPointPos)) {
 
-						// return point which is available to the player
-						return tempPointPos;
+						// We used circle equation 
+						// to check mouse position with current point
+						if (std::pow((mousePos.x - tempPointPos.x), 2)
+							+ std::pow((mousePos.y - tempPointPos.y), 2)
+							<= std::pow(HOVER_POINT_RADIUS, 2)) {
+
+							// return point which is available to the player
+							return tempPointPos;
+						}
 					}
 				}
 			}
@@ -82,4 +85,55 @@ sf::Vector2f Game::availableMove(const sf::Vector2i mousePos) {
 	// unfortunately there's no point under mouse
 	// or this point is unavailable to the player
 	return sf::Vector2f(0, 0);
+}
+
+bool Game::isAnyLineBetweenPoints(const sf::Vector2f ballPos, const sf::Vector2f pointPos) {
+	if (ballPos.x == pointPos.x) {
+		if (ballPos.y > pointPos.y) {
+			 return (m_board.isLineOnPoint(ballPos.x, ballPos.y, Directions::TOP) 
+				 && m_board.isLineOnPoint(pointPos.x, pointPos.y, Directions::DOWN));
+		}
+
+		else if (ballPos.y < pointPos.y) {
+			return (m_board.isLineOnPoint(ballPos.x, ballPos.y, Directions::DOWN)
+				&& m_board.isLineOnPoint(pointPos.x, pointPos.y, Directions::TOP));
+		}
+	}
+
+	else if (ballPos.y == pointPos.y) {
+		if (ballPos.x > pointPos.x) {
+			return (m_board.isLineOnPoint(ballPos.x, ballPos.y, Directions::LEFT)
+				&& m_board.isLineOnPoint(pointPos.x, pointPos.y, Directions::RIGHT));
+		}
+
+		else if (ballPos.x < pointPos.x) {
+			return (m_board.isLineOnPoint(ballPos.x, ballPos.y, Directions::RIGHT)
+				&& m_board.isLineOnPoint(pointPos.x, pointPos.y, Directions::LEFT));
+		}
+	}
+
+	else if (ballPos.x > pointPos.x) {
+		if (ballPos.y > pointPos.y) {
+			return (m_board.isLineOnPoint(ballPos.x, ballPos.y, Directions::TOP_LEFT)
+				&& m_board.isLineOnPoint(pointPos.x, pointPos.y, Directions::DOWN_RIGHT));
+		}
+
+		else if (ballPos.y < pointPos.y) {
+			return (m_board.isLineOnPoint(ballPos.x, ballPos.y, Directions::DOWN_LEFT)
+				&& m_board.isLineOnPoint(pointPos.x, pointPos.y, Directions::TOP_RIGHT));
+		}
+	}
+
+	else if (ballPos.x < pointPos.x) {
+		if (ballPos.y > pointPos.y) {
+			return (m_board.isLineOnPoint(ballPos.x, ballPos.y, Directions::TOP_RIGHT)
+				&& m_board.isLineOnPoint(pointPos.x, pointPos.y, Directions::DOWN_LEFT));
+		}
+
+		else if (ballPos.y < pointPos.y) {
+			return (m_board.isLineOnPoint(ballPos.x, ballPos.y, Directions::DOWN_RIGHT)
+				&& m_board.isLineOnPoint(pointPos.x, pointPos.y, Directions::TOP_LEFT));
+		}
+	}
+	return false;
 }
