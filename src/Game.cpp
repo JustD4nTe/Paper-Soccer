@@ -18,11 +18,6 @@ void Game::hoverPoint(const sf::Vector2i mousePos) {
 	if (point.x == 0 || point.y == 0)
 		return;
 
-	// set offset to this point
-	// for better displaying
-	point.y -= POINT_RADIUS;
-	point.x -= POINT_RADIUS;
-
 	m_board.toggleHoverPoint(point);
 }
 
@@ -63,20 +58,25 @@ sf::Vector2f Game::availableMove(const sf::Vector2i mousePos) {
 				continue;
 
 			// is current point into square of available move?
-			if ((tempPointPos.x >= left && tempPointPos.x <= right)
-				&& (tempPointPos.y >= up && tempPointPos.y <= down)) {
+			if (((tempPointPos.x >= left && tempPointPos.x <= right)
+				&& (tempPointPos.y >= up && tempPointPos.y <= down))) {
 
-				// some weird math with SFML
-				// basically we used circle equation,
-				// but SFML did an awful joke to us and with no reason
-				// circle position isn't the center, but left-up corner
-				// WHY U DO THIS TO ME???
-				if (std::pow((mousePos.x - POINT_RADIUS - tempPointPos.x), 2)
-					+ std::pow((mousePos.y - POINT_RADIUS - tempPointPos.y), 2)
-					<= std::pow((POINT_RADIUS + 2), 3)) {
-						
-						// return point which is available to the player
-						return tempPointPos;
+				// player shouldn't move on the edge of football pitch
+				if (!(ballPosition.x == MARGIN && tempPointPos.x == ballPosition.x)
+					&& !(ballPosition.y == MARGIN && tempPointPos.y == ballPosition.y)) {
+
+					if (!isAnyLineBetweenPoints(ballPosition, tempPointPos)) {
+
+						// We used circle equation 
+						// to check mouse position with current point
+						if (std::pow((mousePos.x - tempPointPos.x), 2)
+							+ std::pow((mousePos.y - tempPointPos.y), 2)
+							<= std::pow(HOVER_POINT_RADIUS, 2)) {
+
+							// return point which is available to the player
+							return tempPointPos;
+						}
+					}
 				}
 			}
 		}
@@ -85,4 +85,55 @@ sf::Vector2f Game::availableMove(const sf::Vector2i mousePos) {
 	// unfortunately there's no point under mouse
 	// or this point is unavailable to the player
 	return sf::Vector2f(0, 0);
+}
+
+bool Game::isAnyLineBetweenPoints(const sf::Vector2f ballPos, const sf::Vector2f pointPos) {
+	if (ballPos.x == pointPos.x) {
+		if (ballPos.y > pointPos.y) {
+			 return (m_board.isLineOnPoint(ballPos.x, ballPos.y, Directions::TOP) 
+				 && m_board.isLineOnPoint(pointPos.x, pointPos.y, Directions::DOWN));
+		}
+
+		else if (ballPos.y < pointPos.y) {
+			return (m_board.isLineOnPoint(ballPos.x, ballPos.y, Directions::DOWN)
+				&& m_board.isLineOnPoint(pointPos.x, pointPos.y, Directions::TOP));
+		}
+	}
+
+	else if (ballPos.y == pointPos.y) {
+		if (ballPos.x > pointPos.x) {
+			return (m_board.isLineOnPoint(ballPos.x, ballPos.y, Directions::LEFT)
+				&& m_board.isLineOnPoint(pointPos.x, pointPos.y, Directions::RIGHT));
+		}
+
+		else if (ballPos.x < pointPos.x) {
+			return (m_board.isLineOnPoint(ballPos.x, ballPos.y, Directions::RIGHT)
+				&& m_board.isLineOnPoint(pointPos.x, pointPos.y, Directions::LEFT));
+		}
+	}
+
+	else if (ballPos.x > pointPos.x) {
+		if (ballPos.y > pointPos.y) {
+			return (m_board.isLineOnPoint(ballPos.x, ballPos.y, Directions::TOP_LEFT)
+				&& m_board.isLineOnPoint(pointPos.x, pointPos.y, Directions::DOWN_RIGHT));
+		}
+
+		else if (ballPos.y < pointPos.y) {
+			return (m_board.isLineOnPoint(ballPos.x, ballPos.y, Directions::DOWN_LEFT)
+				&& m_board.isLineOnPoint(pointPos.x, pointPos.y, Directions::TOP_RIGHT));
+		}
+	}
+
+	else if (ballPos.x < pointPos.x) {
+		if (ballPos.y > pointPos.y) {
+			return (m_board.isLineOnPoint(ballPos.x, ballPos.y, Directions::TOP_RIGHT)
+				&& m_board.isLineOnPoint(pointPos.x, pointPos.y, Directions::DOWN_LEFT));
+		}
+
+		else if (ballPos.y < pointPos.y) {
+			return (m_board.isLineOnPoint(ballPos.x, ballPos.y, Directions::DOWN_RIGHT)
+				&& m_board.isLineOnPoint(pointPos.x, pointPos.y, Directions::TOP_LEFT));
+		}
+	}
+	return false;
 }
