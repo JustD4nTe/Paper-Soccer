@@ -1,5 +1,10 @@
 #include "Game.h"
 
+Game::Game() : m_board(Board()) {
+	m_players[0] = new Player("Player 1", PlayerNr::PLAYER_ONE);
+	m_players[1] = new Player("Player 2", PlayerNr::PLAYER_ONE);
+}
+
 void Game::draw(sf::RenderWindow& mWindow) {
 	mWindow.clear();
 	m_board.drawBoard(&mWindow);

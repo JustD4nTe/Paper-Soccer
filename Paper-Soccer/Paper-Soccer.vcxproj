@@ -28,6 +28,7 @@
     <ClInclude Include="..\src\Ball.h" />
     <ClInclude Include="..\src\Board.h" />
     <ClInclude Include="..\src\Game.h" />
+    <ClInclude Include="..\src\Player.h" />
     <ClInclude Include="..\src\Point.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
