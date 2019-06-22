@@ -2,12 +2,15 @@
 
 Game::Game() : m_board(Board()) {
 	m_players[0] = new Player("Player 1", PlayerNr::PLAYER_ONE);
-	m_players[1] = new Player("Player 2", PlayerNr::PLAYER_ONE);
+	m_players[1] = new Player("Player 2", PlayerNr::PLAYER_TWO);
 }
 
 void Game::draw(sf::RenderWindow& mWindow) {
 	mWindow.clear();
+
 	m_board.drawBoard(&mWindow);
+	drawPlayers(&mWindow);
+
 	mWindow.display();
 }
 
@@ -141,4 +144,11 @@ bool Game::isAnyLineBetweenPoints(const sf::Vector2f ballPos, const sf::Vector2f
 		}
 	}
 	return false;
+}
+
+// Draw players' name
+void Game::drawPlayers(sf::RenderWindow* mWindow) {
+	for (Player* player : m_players)	{
+		mWindow->draw(player->getText());
+	}	
 }
