@@ -39,18 +39,8 @@ public:
 	void drawBoard(sf::RenderWindow* hWindow);
 	sf::Vector2f getPointPosition(const unsigned x, const unsigned y);
 	void movingTheBall(const sf::Vector2f newPositionOfBall);
-
-	bool isLineOnPoint(const unsigned x, const unsigned y, const uint8_t direction) {
-		return getPoint(sf::Vector2f(x, y))->isLine(direction);
-	}
-	
-	void toggleHoverPoint(sf::Vector2f pos = sf::Vector2f(-20, -20)) {
-		m_hoverPoint.setPosition(pos);
-	}
-
-	sf::Vector2f getBallPosition() {
-		return m_ball.getPosition();
-	}
-
+	bool isLineOnPoint(const unsigned x, const unsigned y, const uint8_t direction);
+	void toggleHoverPoint(const sf::Vector2f position = sf::Vector2f(-20, -20));
+	sf::Vector2f getBallPosition();
 	bool isBouncePosibility(const sf::Vector2f point);
 };

@@ -19,13 +19,7 @@ public:
 	Ball() {}
 	Ball(Point* point) : m_point(point) {}
 
-	sf::Vector2f getPosition() {
-		return m_point->getPosition();
-	}
-
-	bool isLine(const uint8_t direction) {
-		return m_point->isLine(direction);
-	}
-
+	sf::Vector2f getPosition();
+	bool isLine(const uint8_t direction);
 	void setNewBall(Point* newBall);
 };

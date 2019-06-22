@@ -39,6 +39,17 @@ void Board::movingTheBall(sf::Vector2f newPositionOfBall) {
 	);
 }
 
+bool Board::isLineOnPoint(const unsigned x, const unsigned y, const uint8_t direction) {
+	return getPoint(sf::Vector2f(x, y))->isLine(direction);
+}
+
+void Board::toggleHoverPoint(const sf::Vector2f position) {
+	m_hoverPoint.setPosition(position);
+}
+
+sf::Vector2f Board::getBallPosition() {
+	return m_ball.getPosition();
+}
 // If point have any connections before move
 // player have additional move
 bool Board::isBouncePosibility(const sf::Vector2f pointPosition) {
