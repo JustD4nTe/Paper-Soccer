@@ -1,8 +1,19 @@
 #include "Game.h"
 
+Game::Game() : m_board(Board()) {
+	m_players[0] = new Player("Player 1", PlayerNr::PLAYER_ONE);
+	m_players[1] = new Player("Player 2", PlayerNr::PLAYER_TWO);
+
+	currentPlayer = m_players[0];
+	currentPlayer->PlayerTurnStart();
+}
+
 void Game::draw(sf::RenderWindow& mWindow) {
 	mWindow.clear();
+
 	m_board.drawBoard(&mWindow);
+	drawPlayers(&mWindow);
+
 	mWindow.display();
 }
 
@@ -30,7 +41,27 @@ void Game::move(const sf::Vector2i mousePos) {
 	if (point.x == 0 || point.y == 0)
 		return;
 
+	// checking if there is any connections with future ball position
+	const bool isPlayerShouldNotEndTurn = m_board.isBouncePosibility(point);
+
+	// change position of ball
 	m_board.movingTheBall(point);
+
+
+	// if there isn't any connections player's turn is end
+	if (!isPlayerShouldNotEndTurn) {
+		// end turn
+		currentPlayer->PlayerTurnEnd();
+
+		// change player
+		if (currentPlayer->m_nr == PLAYER_ONE)
+			currentPlayer = m_players[1];
+		else
+			currentPlayer = m_players[0];
+
+		// start new turn
+		currentPlayer->PlayerTurnStart();
+	}
 }
 
 // At first searching which point is under mouse
@@ -136,4 +167,11 @@ bool Game::isAnyLineBetweenPoints(const sf::Vector2f ballPos, const sf::Vector2f
 		}
 	}
 	return false;
+}
+
+// Draw players' name
+void Game::drawPlayers(sf::RenderWindow* mWindow) {
+	for (Player* player : m_players)	{
+		mWindow->draw(player->getText());
+	}	
 }

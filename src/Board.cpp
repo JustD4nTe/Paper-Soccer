@@ -39,6 +39,12 @@ void Board::movingTheBall(sf::Vector2f newPositionOfBall) {
 	);
 }
 
+// If point have any connections before move
+// player have additional move
+bool Board::isBouncePosibility(const sf::Vector2f point) {
+	return getPoint(point)->isAnyConnections();
+}
+
 #pragma endregion
 
 #pragma region Private

@@ -11,7 +11,7 @@
 #define POINT_RADIUS 5
 #define HOVER_POINT_RADIUS POINT_RADIUS * 4
 #define DISTANCE_BEETWEN_POINTS 50
-#define MARGIN 100
+#define MARGIN 150
 #define GATE_SIZE 2
 
 class Board {
@@ -51,4 +51,6 @@ public:
 	sf::Vector2f getBallPosition() {
 		return m_ball.getPosition();
 	}
+
+	bool isBouncePosibility(const sf::Vector2f point);
 };
