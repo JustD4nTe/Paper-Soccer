@@ -7,7 +7,7 @@ class Game{
 private:
 	Board m_board;
 	Player* m_players[2];
-	Player* currentPlayer;
+	Player* m_currentPlayer;
 
 	sf::Vector2f availableMove(const sf::Vector2i mousePos);
 	bool isAnyLineBetweenPoints(const sf::Vector2f ballPos, const sf::Vector2f pointPo);
