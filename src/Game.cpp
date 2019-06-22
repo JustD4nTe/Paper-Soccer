@@ -41,20 +41,27 @@ void Game::move(const sf::Vector2i mousePos) {
 	if (point.x == 0 || point.y == 0)
 		return;
 
+	// checking if there is any connections with future ball position
+	const bool isPlayerShouldNotEndTurn = m_board.isBouncePosibility(point);
+
 	// change position of ball
 	m_board.movingTheBall(point);
 
-	// end turn
-	currentPlayer->PlayerTurnEnd();
 
-	// change player
-	if (currentPlayer->m_nr == PLAYER_ONE)
-		currentPlayer = m_players[1];	
-	else
-		currentPlayer = m_players[0];
+	// if there isn't any connections player's turn is end
+	if (!isPlayerShouldNotEndTurn) {
+		// end turn
+		currentPlayer->PlayerTurnEnd();
 
-	// start new turn
-	currentPlayer->PlayerTurnStart();
+		// change player
+		if (currentPlayer->m_nr == PLAYER_ONE)
+			currentPlayer = m_players[1];
+		else
+			currentPlayer = m_players[0];
+
+		// start new turn
+		currentPlayer->PlayerTurnStart();
+	}
 }
 
 // At first searching which point is under mouse

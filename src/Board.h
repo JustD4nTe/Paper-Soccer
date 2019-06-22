@@ -51,4 +51,6 @@ public:
 	sf::Vector2f getBallPosition() {
 		return m_ball.getPosition();
 	}
+
+	bool isBouncePosibility(const sf::Vector2f point);
 };

@@ -13,7 +13,11 @@ public:
 	}
 
 	bool isLine(const uint8_t direction) {
-		return (m_lines 
-			& direction);
+		return (m_lines & direction);
+	}
+
+	// Is any connections with this point
+	bool isAnyConnections() {
+		return m_lines > 0 ? true : false;
 	}
 };
