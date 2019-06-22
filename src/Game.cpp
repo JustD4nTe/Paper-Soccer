@@ -75,6 +75,9 @@ sf::Vector2f Game::availableMove(const sf::Vector2i mousePos) {
 	const unsigned left = ballPosition.x - DISTANCE_BEETWEN_POINTS;
 	const unsigned right = ballPosition.x + DISTANCE_BEETWEN_POINTS;
 
+	const unsigned rightEdgeOfPitch = MARGIN + ((BOARD_SIZE_X - 1) * DISTANCE_BEETWEN_POINTS);
+	const unsigned bottomEdgeOfPitch = MARGIN + ((BOARD_SIZE_Y - 1) * DISTANCE_BEETWEN_POINTS);
+
 	// searching at all points for the one <3
 	for (unsigned x = 0; x < BOARD_SIZE_X; x++) {
 		for (unsigned y = 0; y < BOARD_SIZE_Y; y++) {
@@ -89,26 +92,30 @@ sf::Vector2f Game::availableMove(const sf::Vector2i mousePos) {
 				continue;
 
 			// is current point into square of available move?
-			if (((tempPointPos.x >= left && tempPointPos.x <= right)
-				&& (tempPointPos.y >= up && tempPointPos.y <= down))) {
+			bool isInSquare = (tempPointPos.x >= left && tempPointPos.x <= right)
+				&& (tempPointPos.y >= up && tempPointPos.y <= down);
 
-				// player shouldn't move on the edge of football pitch
-				if (!(ballPosition.x == MARGIN && tempPointPos.x == ballPosition.x)
-					&& !(ballPosition.y == MARGIN && tempPointPos.y == ballPosition.y)) {
 
-					if (!isAnyLineBetweenPoints(ballPosition, tempPointPos)) {
+			// player shouldn't move on the edge of football pitch
+			bool isNotEdgeX = !((ballPosition.x == MARGIN || ballPosition.x == rightEdgeOfPitch)	
+				&& tempPointPos.x == ballPosition.x);
 
-						// We used circle equation 
-						// to check mouse position with current point
-						if (std::pow((mousePos.x - tempPointPos.x), 2)
-							+ std::pow((mousePos.y - tempPointPos.y), 2)
-							<= std::pow(HOVER_POINT_RADIUS, 2)) {
+			bool isNotEdgeY = !((ballPosition.y == MARGIN || ballPosition.y == bottomEdgeOfPitch) 
+				&& tempPointPos.y == ballPosition.y);
 
-							// return point which is available to the player
-							return tempPointPos;
-						}
+
+			if (isInSquare && isNotEdgeX && isNotEdgeY 
+				&& !isAnyLineBetweenPoints(ballPosition, tempPointPos)) {
+					// We used circle equation 
+					// to check mouse position with current point
+					if (std::pow((mousePos.x - tempPointPos.x), 2)
+						+ std::pow((mousePos.y - tempPointPos.y), 2)
+						<= std::pow(HOVER_POINT_RADIUS, 2)) {
+					
+						// return point which is available to the player
+						return tempPointPos;				
+					
 					}
-				}
 			}
 		}
 	}
