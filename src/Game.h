@@ -20,5 +20,4 @@ public:
 	void draw(sf::RenderWindow& mWindow);
 	void hoverPoint(const sf::Vector2i mousePos);
 	void move(const sf::Vector2i mousePos);
-	bool isBouncePosibility(const sf::Vector2f point);
 };
