@@ -3,7 +3,7 @@
 #include "Board.h"
 #include "Player.h"
 
-class Game{
+class Game {
 private:
 	Board m_board;
 	Player* m_players[2];

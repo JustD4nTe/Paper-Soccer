@@ -5,12 +5,12 @@ class Point : public sf::CircleShape {
 private:
 	uint8_t m_lines = 0b00000000;
 	bool m_isEdge;
-	
+
 public:
 
-	Point(){}
-	Point(unsigned point, bool isEdge) 
-		: sf::CircleShape(point), m_isEdge(isEdge){};
+	Point() {}
+	Point(unsigned point, bool isEdge)
+		: sf::CircleShape(point), m_isEdge(isEdge) {};
 
 	void newLine(const uint8_t direction) {
 		m_lines |= direction;

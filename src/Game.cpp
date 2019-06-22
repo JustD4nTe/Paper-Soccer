@@ -41,7 +41,7 @@ void Game::move(const sf::Vector2i mousePos) {
 	if (point.x == 0 || point.y == 0)
 		return;
 
-	
+
 	// checking if there is any connections with future ball position
 	const bool isPlayerShouldNotEndTurn = m_board.isBouncePosibility(point);
 
@@ -98,25 +98,25 @@ sf::Vector2f Game::availableMove(const sf::Vector2i mousePos) {
 
 
 			// player shouldn't move on the edge of football pitch
-			bool isNotEdgeX = !((ballPosition.x == MARGIN || ballPosition.x == rightEdgeOfPitch)	
+			bool isNotEdgeX = !((ballPosition.x == MARGIN || ballPosition.x == rightEdgeOfPitch)
 				&& tempPointPos.x == ballPosition.x);
 
-			bool isNotEdgeY = !((ballPosition.y == MARGIN || ballPosition.y == bottomEdgeOfPitch) 
+			bool isNotEdgeY = !((ballPosition.y == MARGIN || ballPosition.y == bottomEdgeOfPitch)
 				&& tempPointPos.y == ballPosition.y);
 
 
-			if (isInSquare && isNotEdgeX && isNotEdgeY 
+			if (isInSquare && isNotEdgeX && isNotEdgeY
 				&& !isAnyLineBetweenPoints(ballPosition, tempPointPos)) {
-					// We used circle equation 
-					// to check mouse position with current point
-					if (std::pow((mousePos.x - tempPointPos.x), 2)
-						+ std::pow((mousePos.y - tempPointPos.y), 2)
-						<= std::pow(HOVER_POINT_RADIUS, 2)) {
-					
-						// return point which is available to the player
-						return tempPointPos;				
-					
-					}
+				// We used circle equation 
+				// to check mouse position with current point
+				if (std::pow((mousePos.x - tempPointPos.x), 2)
+					+ std::pow((mousePos.y - tempPointPos.y), 2)
+					<= std::pow(HOVER_POINT_RADIUS, 2)) {
+
+					// return point which is available to the player
+					return tempPointPos;
+
+				}
 			}
 		}
 	}
@@ -129,8 +129,8 @@ sf::Vector2f Game::availableMove(const sf::Vector2i mousePos) {
 bool Game::isAnyLineBetweenPoints(const sf::Vector2f ballPos, const sf::Vector2f pointPos) {
 	if (ballPos.x == pointPos.x) {
 		if (ballPos.y > pointPos.y) {
-			 return (m_board.isLineOnPoint(ballPos.x, ballPos.y, Directions::TOP) 
-				 && m_board.isLineOnPoint(pointPos.x, pointPos.y, Directions::DOWN));
+			return (m_board.isLineOnPoint(ballPos.x, ballPos.y, Directions::TOP)
+				&& m_board.isLineOnPoint(pointPos.x, pointPos.y, Directions::DOWN));
 		}
 
 		else if (ballPos.y < pointPos.y) {
@@ -179,7 +179,7 @@ bool Game::isAnyLineBetweenPoints(const sf::Vector2f ballPos, const sf::Vector2f
 
 // Draw players' name
 void Game::drawPlayers(sf::RenderWindow* mWindow) {
-	for (Player* player : m_players)	{
+	for (Player* player : m_players) {
 		mWindow->draw(player->getText());
-	}	
+	}
 }
