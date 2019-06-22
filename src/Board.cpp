@@ -41,8 +41,10 @@ void Board::movingTheBall(sf::Vector2f newPositionOfBall) {
 
 // If point have any connections before move
 // player have additional move
-bool Board::isBouncePosibility(const sf::Vector2f point) {
-	return getPoint(point)->isAnyConnections();
+bool Board::isBouncePosibility(const sf::Vector2f pointPosition) {
+	Point* point = getPoint(pointPosition);
+
+	return (point->isAnyConnections() | point->isEdge());
 }
 
 #pragma endregion
@@ -56,8 +58,12 @@ void Board::initPoints() {
 		for (unsigned x = 0; x < BOARD_SIZE_X; x++) {
 			tempCirc = &m_points[x][y];
 
-			// Create new point
-			*tempCirc = Point(POINT_RADIUS);
+			// Create new points
+			if (x == 0 || y == 0 || x == (BOARD_SIZE_X - 1) || y == (BOARD_SIZE_Y - 1))
+				m_points[x][y] = Point(POINT_RADIUS, true);
+			else
+				m_points[x][y] = Point(POINT_RADIUS, false);
+
 			tempCirc->setFillColor(sf::Color::Green);
 
 			// set new center
