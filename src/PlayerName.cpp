@@ -21,3 +21,11 @@ sf::Text PlayerName::getText() {
 void PlayerName::setPosition(const float x, const float y) {
 	m_nameToDisplay.setPosition(x, y);
 }
+
+void PlayerName::enableUnderline() {
+	m_nameToDisplay.setStyle(sf::Text::Underlined);
+}
+
+void PlayerName::disableUnderline() {
+	m_nameToDisplay.setStyle(sf::Text::Regular);
+}

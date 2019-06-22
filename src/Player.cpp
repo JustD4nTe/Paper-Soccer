@@ -2,7 +2,7 @@
 #include "Board.h"
 
 Player::Player(const std::string name, const PlayerNr nr)
-	: m_name(PlayerName(name)), m_nr(nr), isMovePoint(true) {
+	: m_name(PlayerName(name)), m_nr(nr), isMovePoint(false) {
 
 	if (nr == PlayerNr::PLAYER_ONE) {
 		const float y = MARGIN - DISTANCE_BEETWEN_POINTS * 2;
@@ -19,4 +19,17 @@ Player::Player(const std::string name, const PlayerNr nr)
 
 sf::Text Player::getText() {
 	return m_name.getText();
+}
+
+void Player::moved() {
+	isMovePoint = false;
+}
+
+void Player::PlayerTurnStart() {
+	m_name.enableUnderline();
+	isMovePoint = true;
+}
+
+void Player::PlayerTurnEnd() {
+	m_name.disableUnderline();
 }

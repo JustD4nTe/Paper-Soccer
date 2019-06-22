@@ -3,6 +3,9 @@
 Game::Game() : m_board(Board()) {
 	m_players[0] = new Player("Player 1", PlayerNr::PLAYER_ONE);
 	m_players[1] = new Player("Player 2", PlayerNr::PLAYER_TWO);
+
+	currentPlayer = m_players[0];
+	currentPlayer->PlayerTurnStart();
 }
 
 void Game::draw(sf::RenderWindow& mWindow) {
@@ -38,7 +41,23 @@ void Game::move(const sf::Vector2i mousePos) {
 	if (point.x == 0 || point.y == 0)
 		return;
 
+	// player cant move longer
+	currentPlayer->moved();
+
+	// change position of ball
 	m_board.movingTheBall(point);
+
+	// end turn
+	currentPlayer->PlayerTurnEnd();
+
+	// change player
+	if (currentPlayer->m_nr == PLAYER_ONE)
+		currentPlayer = m_players[1];	
+	else
+		currentPlayer = m_players[0];
+
+	// start new turn
+	currentPlayer->PlayerTurnStart();
 }
 
 // At first searching which point is under mouse
