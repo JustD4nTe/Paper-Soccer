@@ -41,9 +41,6 @@ void Game::move(const sf::Vector2i mousePos) {
 	if (point.x == 0 || point.y == 0)
 		return;
 
-	// player cant move longer
-	currentPlayer->moved();
-
 	// change position of ball
 	m_board.movingTheBall(point);
 
