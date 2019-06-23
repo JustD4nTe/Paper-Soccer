@@ -17,7 +17,7 @@ void Board::drawBoard(sf::RenderWindow* hWindow) {
 
 	hWindow->draw(m_lines);
 
-	// it useless to draw o shape when it have a negative coords
+	// it's useless to draw a shape when it has negative coords
 	if (m_hoverPoint.getPosition().x != -20)
 		hWindow->draw(m_hoverPoint);
 }
@@ -51,8 +51,8 @@ sf::Vector2f Board::getBallPosition() {
 	return m_ball.getPosition();
 }
 
-// If point have any connections before move
-// player have additional move
+// If the point has any connections before moving
+// the player has additional movement
 bool Board::isBouncePosibility(const sf::Vector2f pointPosition) {
 	Point* point = getPoint(pointPosition);
 
@@ -89,7 +89,7 @@ void Board::initPoints() {
 }
 
 // Initialize frame with 12 corners
-// it should looks like a football pitch
+// it should look like a football pitch
 void Board::initFrame() {
 	// Some math's magic to have scalable board
 	const float GATE_LEFT_CORNER_POINT_X =

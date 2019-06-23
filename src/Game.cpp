@@ -22,7 +22,7 @@ void Game::hoverPoint(const sf::Vector2i mousePos) {
 	// disable HoverPoint
 	m_board.toggleHoverPoint();
 
-	// checks if point is available
+	// checks if the point is available
 	sf::Vector2f point = availableMove(mousePos);
 
 	// nope
@@ -34,7 +34,7 @@ void Game::hoverPoint(const sf::Vector2i mousePos) {
 
 // Trying to move the ball
 void Game::move(const sf::Vector2i mousePos) {
-	// checks if point is available
+	// checks if the point is available
 	sf::Vector2f point = availableMove(mousePos);
 
 	// nope
@@ -42,14 +42,14 @@ void Game::move(const sf::Vector2i mousePos) {
 		return;
 
 
-	// checking if there is any connections with future ball position
+	// checking if there are any connections with future ball position
 	const bool isPlayerShouldNotEndTurn = m_board.isBouncePosibility(point);
 
-	// change position of ball
+	// change position of the ball
 	m_board.movingTheBall(point);
 
 
-	// if there isn't any connections player's turn is end
+	// if there aren't any connections player's turn is end
 	if (!isPlayerShouldNotEndTurn) {
 		// end turn
 		m_currentPlayer->PlayerTurnEnd();
@@ -66,7 +66,7 @@ void Game::move(const sf::Vector2i mousePos) {
 }
 
 // At first searching which point is under mouse
-// then checks if player can move to this point
+// then checks if the player can move to this point
 sf::Vector2f Game::availableMove(const sf::Vector2i mousePos) {
 	const sf::Vector2f ballPosition = m_board.getBallPosition();
 
