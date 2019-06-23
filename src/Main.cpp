@@ -13,7 +13,7 @@ int main() {
 	while (mainWindow.isOpen()) {
 		sf::Event event;
 		while (mainWindow.pollEvent(event)) {
-			if (event.type == sf::Event::Closed)
+			if (event.type == sf::Event::Closed || event.key.code == sf::Keyboard::Escape)
 				mainWindow.close();
 
 			if (event.key.code == sf::Mouse::Left) {
