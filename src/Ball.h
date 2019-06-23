@@ -22,4 +22,6 @@ public:
 	sf::Vector2f getPosition();
 	bool isLine(const uint8_t direction);
 	void setNewBall(Point* newBall);
+	bool isOnTheEdge();
+	void setGoal(Point* gate);
 };

@@ -30,6 +30,7 @@
     <ClInclude Include="..\src\Ball.h" />
     <ClInclude Include="..\src\Board.h" />
     <ClInclude Include="..\src\Game.h" />
+    <ClInclude Include="..\src\Gate.h" />
     <ClInclude Include="..\src\Player.h" />
     <ClInclude Include="..\src\PlayerName.h" />
     <ClInclude Include="..\src\Point.h" />

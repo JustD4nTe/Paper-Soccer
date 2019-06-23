@@ -15,4 +15,6 @@ public:
 	void setPosition(const float x, const float y);
 	void enableUnderline();
 	void disableUnderline();
+
+	std::string getName();
 };

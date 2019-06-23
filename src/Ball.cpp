@@ -63,3 +63,11 @@ void Ball::setNewBall(Point* newBall) {
 
 	m_point = newBall;
 }
+
+bool Ball::isOnTheEdge() {
+	return m_point->isEdge();
+}
+
+void Ball::setGoal(Point* gate) {
+	m_point = gate;
+}
