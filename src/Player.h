@@ -20,4 +20,5 @@ public:
 	sf::Text getText();
 	void PlayerTurnStart();
 	void PlayerTurnEnd();
+	std::string getName();
 };

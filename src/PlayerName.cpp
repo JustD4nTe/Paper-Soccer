@@ -29,3 +29,7 @@ void PlayerName::enableUnderline() {
 void PlayerName::disableUnderline() {
 	m_nameToDisplay.setStyle(sf::Text::Regular);
 }
+
+std::string PlayerName::getName() {
+	return m_name;
+}
