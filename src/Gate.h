@@ -9,7 +9,7 @@ private:
 
 public:
 	Gate() {}
-	Gate(unsigned point, PlayerNr player)
+	Gate(const float point, const PlayerNr player)
 		: sf::CircleShape(point), m_player(player) {};
 
 	PlayerNr getPlayer() {

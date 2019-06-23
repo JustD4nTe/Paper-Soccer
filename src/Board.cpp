@@ -55,7 +55,7 @@ bool Board::movingTheBall(sf::Vector2f newPositionOfBall) {
 	}
 }
 
-bool Board::isLineOnPoint(const unsigned x, const unsigned y, const uint8_t direction) {
+bool Board::isLineOnPoint(const float x, const float y, const uint8_t direction) {
 	return getPoint(sf::Vector2f(x, y))->isLine(direction);
 }
 
@@ -102,8 +102,8 @@ PlayerNr Board::whoseGate() {
 
 void Board::initPoints() {
 	sf::CircleShape* tempCirc;
-	for (unsigned y = 0; y < BOARD_SIZE_Y; ++y) {
-		for (unsigned x = 0; x < BOARD_SIZE_X; x++) {
+	for (int y = 0; y < BOARD_SIZE_Y; ++y) {
+		for (int x = 0; x < BOARD_SIZE_X; x++) {
 			tempCirc = &m_points[x][y];
 
 			// Create new points
@@ -124,8 +124,8 @@ void Board::initPoints() {
 			// set new center
 			tempCirc->setOrigin(POINT_RADIUS, POINT_RADIUS);
 			tempCirc->setPosition(
-				(x * DISTANCE_BEETWEN_POINTS) + MARGIN,
-				(y * DISTANCE_BEETWEN_POINTS) + MARGIN
+				(static_cast<float>(x) * DISTANCE_BEETWEN_POINTS) + MARGIN,
+				(static_cast<float>(y) * DISTANCE_BEETWEN_POINTS) + MARGIN
 			);
 		}
 	}

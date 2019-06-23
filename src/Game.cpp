@@ -78,10 +78,10 @@ sf::Vector2f Game::getPointUnderMouse(const sf::Vector2i mousePos) {
 	const bool isBallOnTheEdge = m_board.isBallOnTheEdge();
 
 	// area where player can see available move
-	const unsigned up = ballPosition.y - DISTANCE_BEETWEN_POINTS;
-	const unsigned down = ballPosition.y + DISTANCE_BEETWEN_POINTS;
-	const unsigned left = ballPosition.x - DISTANCE_BEETWEN_POINTS;
-	const unsigned right = ballPosition.x + DISTANCE_BEETWEN_POINTS;
+	const float up = ballPosition.y - DISTANCE_BEETWEN_POINTS;
+	const float down = ballPosition.y + DISTANCE_BEETWEN_POINTS;
+	const float left = ballPosition.x - DISTANCE_BEETWEN_POINTS;
+	const float right = ballPosition.x + DISTANCE_BEETWEN_POINTS;
 
 	// searching at all points for the one <3
 	for (unsigned x = 0; x < BOARD_SIZE_X; x++) {

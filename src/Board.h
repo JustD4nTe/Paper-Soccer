@@ -47,7 +47,7 @@ public:
 	sf::Vector2f getPointPosition(const unsigned x, const unsigned y);
 	sf::Vector2f getGatePosition(const unsigned iterator);
 	bool movingTheBall(const sf::Vector2f newPositionOfBall);
-	bool isLineOnPoint(const unsigned x, const unsigned y, const uint8_t direction);
+	bool isLineOnPoint(const float x, const float y, const uint8_t direction);
 	void toggleHoverPoint(const sf::Vector2f position = sf::Vector2f(-20, -20));
 	sf::Vector2f getBallPosition();
 	bool isBouncePosibility(const sf::Vector2f point);
