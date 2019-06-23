@@ -90,8 +90,15 @@ void Board::initPoints() {
 			tempCirc = &m_points[x][y];
 
 			// Create new points
-			if (x == 0 || y == 0 || x == (BOARD_SIZE_X - 1) || y == (BOARD_SIZE_Y - 1))
-				m_points[x][y] = Point(POINT_RADIUS, true);
+			// point in front of gate
+			if (x == (BOARD_SIZE_X - 1) / 2)
+				m_points[x][y] = Point(POINT_RADIUS, false);
+
+			// edges
+			else if (x == 0 || y == 0 || x == (BOARD_SIZE_X - 1) || y == (BOARD_SIZE_Y - 1))
+					m_points[x][y] = Point(POINT_RADIUS, true);
+
+			// other points
 			else
 				m_points[x][y] = Point(POINT_RADIUS, false);
 
