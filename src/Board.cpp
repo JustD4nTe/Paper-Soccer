@@ -35,7 +35,7 @@ void Board::movingTheBall(sf::Vector2f newPositionOfBall) {
 
 	m_lines.append(sf::Vertex(
 		newBall->getPosition(),
-		sf::Color::Cyan)
+		sf::Color::Color(166, 255, 166, 255))
 	);
 }
 
@@ -76,7 +76,7 @@ void Board::initPoints() {
 			else
 				m_points[x][y] = Point(POINT_RADIUS, false);
 
-			tempCirc->setFillColor(sf::Color::Green);
+			tempCirc->setFillColor(sf::Color::Color(166,255,166,255));
 
 			// set new center
 			tempCirc->setOrigin(POINT_RADIUS, POINT_RADIUS);
@@ -136,7 +136,7 @@ void Board::initHoverPoint() {
 
 	// it should only over-line a point
 	m_hoverPoint.setFillColor(sf::Color::Transparent);
-	m_hoverPoint.setOutlineColor(sf::Color::Magenta);
+	m_hoverPoint.setOutlineColor(sf::Color::Color(238,238,238,220));
 	m_hoverPoint.setOutlineThickness(2);
 
 	// set center of the point
@@ -155,7 +155,7 @@ void Board::initLines() {
 
 	m_lines.append(sf::Vertex(m_ball.getPosition()));
 
-	m_lines[0].color = sf::Color::Cyan;
+	m_lines[0].color = sf::Color::Color(166,255,166,255);
 }
 
 #pragma endregion
@@ -173,6 +173,9 @@ void Board::drawPoints(sf::RenderWindow* hWindow) {
 // Draws frame around board
 void Board::drawFrame(sf::RenderWindow* hWindow) {
 	hWindow->draw(m_frame);
+	m_frame.setOutlineThickness(5);
+	m_frame.setOutlineColor(sf::Color::Color(238, 238, 238, 200));
+	m_frame.setFillColor(sf::Color::Color(28,28,28,255));
 }
 
 #pragma endregion

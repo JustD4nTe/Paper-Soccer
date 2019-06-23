@@ -10,7 +10,7 @@ int main() {
 		sf::Style::Titlebar | sf::Style::Close);
 
 	Game game = Game();
-
+	sf::Texture texture;
 	while (mainWindow.isOpen()) {
 		sf::Event event;
 		while (mainWindow.pollEvent(event)) {
@@ -24,7 +24,7 @@ int main() {
 
 		game.hoverPoint(sf::Mouse::getPosition(mainWindow));
 
-		game.draw(mainWindow);
+		game.draw(mainWindow,texture);
 	}
 
 	return 0;
