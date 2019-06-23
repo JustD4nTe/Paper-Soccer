@@ -10,7 +10,7 @@ private:
 	Player* m_currentPlayer;
 	bool m_isEnd;
 
-	sf::Vector2f availableMove(const sf::Vector2i mousePos);
+	sf::Vector2f getPointUnderMouse(const sf::Vector2i mousePos);
 	bool isAnyLineBetweenPoints(const sf::Vector2f ballPos, const sf::Vector2f pointPo);
 	void drawPlayers(sf::RenderWindow* mWindow);
 

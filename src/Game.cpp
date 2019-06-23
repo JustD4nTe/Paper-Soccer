@@ -25,7 +25,7 @@ void Game::hoverPoint(const sf::Vector2i mousePos) {
 	m_board.toggleHoverPoint();
 
 	// checks if point is available
-	sf::Vector2f point = availableMove(mousePos);
+	sf::Vector2f point = getPointUnderMouse(mousePos);
 
 	// nope
 	if (point.x == 0 || point.y == 0)
@@ -37,7 +37,7 @@ void Game::hoverPoint(const sf::Vector2i mousePos) {
 // Trying to move the ball
 void Game::move(const sf::Vector2i mousePos) {
 	// checks if point is available
-	sf::Vector2f point = availableMove(mousePos);
+	sf::Vector2f point = getPointUnderMouse(mousePos);
 
 	// nope
 	if (point.x == 0 || point.y == 0)
@@ -70,7 +70,7 @@ void Game::move(const sf::Vector2i mousePos) {
 
 // At first searching which point is under mouse
 // then checks if player can move to this point
-sf::Vector2f Game::availableMove(const sf::Vector2i mousePos) {
+sf::Vector2f Game::getPointUnderMouse(const sf::Vector2i mousePos) {
 	const sf::Vector2f ballPosition = m_board.getBallPosition();
 	const bool isBallOnTheEdge = m_board.isBallOnTheEdge();
 
