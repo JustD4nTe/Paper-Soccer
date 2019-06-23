@@ -6,6 +6,8 @@ Game::Game() : m_board(Board()) {
 
 	m_currentPlayer = m_players[0];
 	m_currentPlayer->PlayerTurnStart();
+
+	m_isEnd = false;
 }
 
 void Game::draw(sf::RenderWindow& mWindow) {
@@ -46,11 +48,12 @@ void Game::move(const sf::Vector2i mousePos) {
 	const bool isPlayerShouldNotEndTurn = m_board.isBouncePosibility(point);
 
 	// change position of ball
-	m_board.movingTheBall(point);
+	m_isEnd = m_board.movingTheBall(point);
+
 
 
 	// if there isn't any connections player's turn is end
-	if (!isPlayerShouldNotEndTurn) {
+	if (!isPlayerShouldNotEndTurn && !m_isEnd) {
 		// end turn
 		m_currentPlayer->PlayerTurnEnd();
 
@@ -121,6 +124,26 @@ sf::Vector2f Game::availableMove(const sf::Vector2i mousePos) {
 		}
 	}
 
+	// when we didn't find the one in points
+	// we have to search in gates
+	for (unsigned i = 0; i < 6; i++) {
+		sf::Vector2f tempGatePos = m_board.getGatePosition(i);
+		
+		if ((tempGatePos.x >= left && tempGatePos.x <= right)
+			&& (tempGatePos.y >= up && tempGatePos.y <= down)) {
+			// We used circle equation 
+			// to check mouse position with current point
+			if (std::pow((mousePos.x - tempGatePos.x), 2)
+				+ std::pow((mousePos.y - tempGatePos.y), 2)
+				<= std::pow(HOVER_POINT_RADIUS, 2)) {
+
+				// return point which is available to the player
+				return tempGatePos;
+			}
+		}
+	}
+
+
 	// unfortunately there's no point under mouse
 	// or this point is unavailable to the player
 	return sf::Vector2f(0, 0);
@@ -182,4 +205,9 @@ void Game::drawPlayers(sf::RenderWindow* mWindow) {
 	for (Player* player : m_players) {
 		mWindow->draw(player->getText());
 	}
+}
+
+bool Game::isEnd() {
+	return m_isEnd;
+}
 }

@@ -38,13 +38,15 @@ private:
 	void drawGates(sf::RenderWindow* hWindow);
 
 	Point* getPoint(const sf::Vector2f pointPos);
+	Gate* getGate(const sf::Vector2f gatePos);
 
 public:
 	Board();
 
 	void drawBoard(sf::RenderWindow* hWindow);
 	sf::Vector2f getPointPosition(const unsigned x, const unsigned y);
-	void movingTheBall(const sf::Vector2f newPositionOfBall);
+	sf::Vector2f getGatePosition(const unsigned iterator);
+	bool movingTheBall(const sf::Vector2f newPositionOfBall);
 	bool isLineOnPoint(const unsigned x, const unsigned y, const uint8_t direction);
 	void toggleHoverPoint(const sf::Vector2f position = sf::Vector2f(-20, -20));
 	sf::Vector2f getBallPosition();

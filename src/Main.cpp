@@ -24,6 +24,9 @@ int main() {
 		game.hoverPoint(sf::Mouse::getPosition(mainWindow));
 
 		game.draw(mainWindow);
+
+		if (game.isEnd())
+			break;
 	}
 
 	return 0;

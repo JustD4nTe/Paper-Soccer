@@ -31,14 +31,27 @@ sf::Vector2f Board::getPointPosition(const unsigned x, const unsigned y) {
 	return m_points[x][y].getPosition();
 }
 
-void Board::movingTheBall(sf::Vector2f newPositionOfBall) {
+bool Board::movingTheBall(sf::Vector2f newPositionOfBall) {
 	Point* newBall = getPoint(newPositionOfBall);
-	m_ball.setNewBall(newBall);
 
-	m_lines.append(sf::Vertex(
-		newBall->getPosition(),
-		sf::Color::Cyan)
-	);
+	if (newBall->getPosition() != sf::Vector2f(0, 0)) {
+		m_ball.setNewBall(newBall);
+
+		m_lines.append(sf::Vertex(
+			newBall->getPosition(),
+			sf::Color::Cyan)
+		);
+		return false;
+	}
+	else {
+		Gate* newBall = getGate(newPositionOfBall);
+
+		m_lines.append(sf::Vertex(
+			newBall->getPosition(),
+			sf::Color::Cyan)
+		);
+		return true;
+	}
 }
 
 bool Board::isLineOnPoint(const unsigned x, const unsigned y, const uint8_t direction) {
@@ -59,6 +72,10 @@ bool Board::isBouncePosibility(const sf::Vector2f pointPosition) {
 	Point* point = getPoint(pointPosition);
 
 	return (point->isAnyConnections() | point->isEdge());
+}
+
+sf::Vector2f Board::getGatePosition(const unsigned iterator) {
+	return m_gates[iterator].getPosition();
 }
 
 #pragma endregion
@@ -223,6 +240,15 @@ Point* Board::getPoint(const sf::Vector2f pointPos) {
 	}
 
 	return new Point();
+}
+
+Gate* Board::getGate(const sf::Vector2f gatePos) {
+	for (unsigned i = 0; i < 6; ++i) {
+		if (m_gates[i].getPosition() == gatePos)
+			return &m_gates[i];
+	}
+	
+	return new Gate();
 }
 
 #pragma endregion
