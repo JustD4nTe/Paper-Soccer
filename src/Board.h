@@ -51,4 +51,6 @@ public:
 	void toggleHoverPoint(const sf::Vector2f position = sf::Vector2f(-20, -20));
 	sf::Vector2f getBallPosition();
 	bool isBouncePosibility(const sf::Vector2f point);
+	bool isBallOnTheEdge();
+	bool isPointOnTheEdge(const unsigned x, const unsigned y);
 };

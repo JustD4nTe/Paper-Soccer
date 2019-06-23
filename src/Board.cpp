@@ -78,6 +78,14 @@ sf::Vector2f Board::getGatePosition(const unsigned iterator) {
 	return m_gates[iterator].getPosition();
 }
 
+bool Board::isBallOnTheEdge() {
+	return m_ball.isOnTheEdge();
+}
+
+bool Board::isPointOnTheEdge(const unsigned x, const unsigned y) {
+	return m_points[x][y].isEdge();
+}
+
 #pragma endregion
 
 #pragma region Private

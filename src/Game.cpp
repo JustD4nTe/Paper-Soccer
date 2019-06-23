@@ -72,6 +72,7 @@ void Game::move(const sf::Vector2i mousePos) {
 // then checks if player can move to this point
 sf::Vector2f Game::availableMove(const sf::Vector2i mousePos) {
 	const sf::Vector2f ballPosition = m_board.getBallPosition();
+	const bool isBallOnTheEdge = m_board.isBallOnTheEdge();
 
 	// area where player can see available move
 	const unsigned up = ballPosition.y - DISTANCE_BEETWEN_POINTS;
@@ -101,14 +102,10 @@ sf::Vector2f Game::availableMove(const sf::Vector2i mousePos) {
 
 
 			// player shouldn't move on the edge of football pitch
-			bool isNotEdgeX = !((ballPosition.x == MARGIN || ballPosition.x == rightEdgeOfPitch)
-				&& tempPointPos.x == ballPosition.x);
-
-			bool isNotEdgeY = !((ballPosition.y == MARGIN || ballPosition.y == bottomEdgeOfPitch)
-				&& tempPointPos.y == ballPosition.y);
+			bool isNotEdgeBetweenBallAndPoint = !(isBallOnTheEdge & m_board.isPointOnTheEdge(x,y));
 
 
-			if (isInSquare && isNotEdgeX && isNotEdgeY
+			if (isInSquare && isNotEdgeBetweenBallAndPoint
 				&& !isAnyLineBetweenPoints(ballPosition, tempPointPos)) {
 				// We used circle equation 
 				// to check mouse position with current point
