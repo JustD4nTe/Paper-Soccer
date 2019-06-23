@@ -64,11 +64,7 @@ void Game::move(const sf::Vector2i mousePos) {
 		// end turn
 		m_currentPlayer->PlayerTurnEnd();
 
-		// change player
-		if (m_currentPlayer->m_nr == PLAYER_ONE)
-			m_currentPlayer = m_players[1];
-		else
-			m_currentPlayer = m_players[0];
+		changePlayer();
 
 		// start new turn
 		m_currentPlayer->PlayerTurnStart();
@@ -220,11 +216,7 @@ std::string Game::getWinner() {
 // not player 1, so we need to change player
 void Game::isOwnGoal() {
 	if (m_board.whoseGate() == m_currentPlayer->m_nr) {
-		// change player
-		if (m_currentPlayer->m_nr == PLAYER_ONE)
-			m_currentPlayer = m_players[1];
-		else
-			m_currentPlayer = m_players[0];
+		changePlayer();
 	}
 }
 
@@ -278,11 +270,14 @@ bool Game::isAvailableMoves() {
 		}
 	}
 
-	// change player
+	changePlayer();
+
+	return false;
+}
+
+void Game::changePlayer() {
 	if (m_currentPlayer->m_nr == PLAYER_ONE)
 		m_currentPlayer = m_players[1];
 	else
 		m_currentPlayer = m_players[0];
-
-	return false;
 }

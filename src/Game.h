@@ -15,6 +15,7 @@ private:
 	void drawPlayers(sf::RenderWindow* mWindow);
 	void isOwnGoal();
 	bool isAvailableMoves();
+	void changePlayer();
 
 public:
 	Game();
