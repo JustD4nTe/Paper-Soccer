@@ -6,7 +6,8 @@
 #define WINDOW_RES_Y 800
 
 int main() {
-	sf::RenderWindow mainWindow(sf::VideoMode(WINDOW_RES_X, WINDOW_RES_Y), "Paper-Soccer");
+	sf::RenderWindow mainWindow(sf::VideoMode(WINDOW_RES_X, WINDOW_RES_Y), "Paper-Soccer",
+		sf::Style::Titlebar | sf::Style::Close);
 
 	Game game = Game();
 
