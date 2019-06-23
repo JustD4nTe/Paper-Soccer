@@ -210,4 +210,7 @@ void Game::drawPlayers(sf::RenderWindow* mWindow) {
 bool Game::isEnd() {
 	return m_isEnd;
 }
+
+std::string Game::getWinner() {
+	return m_currentPlayer->getName() + " won!";
 }

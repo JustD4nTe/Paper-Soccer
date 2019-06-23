@@ -22,4 +22,5 @@ public:
 	void hoverPoint(const sf::Vector2i mousePos);
 	void move(const sf::Vector2i mousePos);
 	bool isEnd();
+	std::string getWinner();
 };
