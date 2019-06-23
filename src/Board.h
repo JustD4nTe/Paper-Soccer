@@ -53,4 +53,5 @@ public:
 	bool isBouncePosibility(const sf::Vector2f point);
 	bool isBallOnTheEdge();
 	bool isPointOnTheEdge(const unsigned x, const unsigned y);
+	PlayerNr whoseGate();
 };

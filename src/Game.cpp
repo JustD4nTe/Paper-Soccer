@@ -50,10 +50,12 @@ void Game::move(const sf::Vector2i mousePos) {
 	// change position of ball
 	m_isEnd = m_board.movingTheBall(point);
 
-
+	if(m_isEnd)
+		isOwnGoal();
 
 	// if there isn't any connections player's turn is end
 	if (!isPlayerShouldNotEndTurn && !m_isEnd) {
+		
 		// end turn
 		m_currentPlayer->PlayerTurnEnd();
 
@@ -207,4 +209,16 @@ bool Game::isEnd() {
 
 std::string Game::getWinner() {
 	return m_currentPlayer->getName() + " won!";
+}
+
+// If player 1 shot ball into his gate player 2 won
+// not player 1, so we need to change player
+void Game::isOwnGoal() {
+	if (m_board.whoseGate() == m_currentPlayer->m_nr) {
+		// change player
+		if (m_currentPlayer->m_nr == PLAYER_ONE)
+			m_currentPlayer = m_players[1];
+		else
+			m_currentPlayer = m_players[0];
+	}
 }

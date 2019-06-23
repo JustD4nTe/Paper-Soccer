@@ -23,4 +23,5 @@ public:
 	bool isLine(const uint8_t direction);
 	void setNewBall(Point* newBall);
 	bool isOnTheEdge();
+	void setGoal(Point* gate);
 };

@@ -45,6 +45,7 @@ bool Board::movingTheBall(sf::Vector2f newPositionOfBall) {
 	}
 	else {
 		Gate* newBall = getGate(newPositionOfBall);
+		m_ball.setGoal((Point*)newBall);
 
 		m_lines.append(sf::Vertex(
 			newBall->getPosition(),
@@ -84,6 +85,14 @@ bool Board::isBallOnTheEdge() {
 
 bool Board::isPointOnTheEdge(const unsigned x, const unsigned y) {
 	return m_points[x][y].isEdge();
+}
+
+PlayerNr Board::whoseGate() {
+	for (unsigned i = 0; i < 6; i++) {
+		if (m_gates[i].getPosition() == m_ball.getPosition())
+			return m_gates[i].getPlayer();
+	}
+	return PlayerNr::NONE;
 }
 
 #pragma endregion
