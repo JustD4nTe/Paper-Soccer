@@ -247,7 +247,7 @@ void Board::drawFrame(sf::RenderWindow* hWindow) {
 	hWindow->draw(m_frame);
 }
 
-// Draws points which represents the gate
+// Draws points which represent the gate
 void Board::drawGates(sf::RenderWindow* hWindow) {
 	for (unsigned i = 0; i < 6; ++i) {
 		hWindow->draw(m_gates[i]);
