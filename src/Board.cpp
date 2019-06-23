@@ -9,11 +9,13 @@ Board::Board() {
 	initFrame();
 	initBall();
 	initLines();
+	initGates();
 }
 
 void Board::drawBoard(sf::RenderWindow* hWindow) {
 	drawFrame(hWindow);
 	drawPoints(hWindow);
+	drawGates(hWindow);
 
 	hWindow->draw(m_lines);
 
@@ -158,6 +160,35 @@ void Board::initLines() {
 	m_lines[0].color = sf::Color::Cyan;
 }
 
+void Board::initGates() {
+	const float GATE_LEFT_CORNER_POINT_X =
+		(((BOARD_SIZE_X - 1) / 2) - 1) * DISTANCE_BEETWEN_POINTS + MARGIN;
+
+	const float BOTTOM_ENDlINE_Y =
+		MARGIN + DISTANCE_BEETWEN_POINTS * (BOARD_SIZE_Y - 1);
+
+	// first player's gate
+	for (unsigned i = 0; i < 3; i++) {
+		m_gates[i] = Gate(POINT_RADIUS, PlayerNr::PLAYER_ONE);
+		m_gates[i].setOrigin(POINT_RADIUS, POINT_RADIUS);
+		m_gates[i].setFillColor(sf::Color::Cyan);
+		m_gates[i].setPosition(
+			GATE_LEFT_CORNER_POINT_X + (DISTANCE_BEETWEN_POINTS * i),
+			MARGIN - DISTANCE_BEETWEN_POINTS
+		);
+	}
+
+	// second player's gate
+	for (unsigned i = 3; i < 6; i++) {
+		m_gates[i] = Gate(POINT_RADIUS, PlayerNr::PLAYER_TWO);
+		m_gates[i].setOrigin(POINT_RADIUS, POINT_RADIUS);
+		m_gates[i].setFillColor(sf::Color::Red);
+		m_gates[i].setPosition(
+			GATE_LEFT_CORNER_POINT_X + (DISTANCE_BEETWEN_POINTS * (i - 3)),
+			MARGIN + DISTANCE_BEETWEN_POINTS * BOARD_SIZE_Y
+		);
+	}
+}
 #pragma endregion
 #pragma region Draw
 
@@ -175,6 +206,12 @@ void Board::drawFrame(sf::RenderWindow* hWindow) {
 	hWindow->draw(m_frame);
 }
 
+// Draws points which represents the gate
+void Board::drawGates(sf::RenderWindow* hWindow) {
+	for (unsigned i = 0; i < 6; ++i) {
+		hWindow->draw(m_gates[i]);
+	}
+}
 #pragma endregion
 
 Point* Board::getPoint(const sf::Vector2f pointPos) {
