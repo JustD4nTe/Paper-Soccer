@@ -6,7 +6,7 @@ PlayerName::PlayerName(const std::string name) : m_name(name) {
 		m_nameToDisplay.setString(m_name);
 		m_nameToDisplay.setCharacterSize(24);
 		m_nameToDisplay.setFillColor(sf::Color::Blue);
-		m_nameToDisplay.setOrigin((m_name.length() * 24) / 2 ,0);
+		m_nameToDisplay.setOrigin((m_name.length() * 24) / 2, 0);
 	}
 
 	else {

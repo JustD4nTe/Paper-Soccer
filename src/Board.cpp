@@ -16,7 +16,7 @@ void Board::drawBoard(sf::RenderWindow* hWindow) {
 	drawPoints(hWindow);
 
 	hWindow->draw(m_lines);
-		
+
 	// it useless to draw o shape when it have a negative coords
 	if (m_hoverPoint.getPosition().x != -20)
 		hWindow->draw(m_hoverPoint);
@@ -34,15 +34,29 @@ void Board::movingTheBall(sf::Vector2f newPositionOfBall) {
 	m_ball.setNewBall(newBall);
 
 	m_lines.append(sf::Vertex(
-		newBall->getPosition(), 
+		newBall->getPosition(),
 		sf::Color::Cyan)
 	);
 }
 
+bool Board::isLineOnPoint(const unsigned x, const unsigned y, const uint8_t direction) {
+	return getPoint(sf::Vector2f(x, y))->isLine(direction);
+}
+
+void Board::toggleHoverPoint(const sf::Vector2f position) {
+	m_hoverPoint.setPosition(position);
+}
+
+sf::Vector2f Board::getBallPosition() {
+	return m_ball.getPosition();
+}
+
 // If point have any connections before move
 // player have additional move
-bool Board::isBouncePosibility(const sf::Vector2f point) {
-	return getPoint(point)->isAnyConnections();
+bool Board::isBouncePosibility(const sf::Vector2f pointPosition) {
+	Point* point = getPoint(pointPosition);
+
+	return (point->isAnyConnections() | point->isEdge());
 }
 
 #pragma endregion
@@ -56,8 +70,12 @@ void Board::initPoints() {
 		for (unsigned x = 0; x < BOARD_SIZE_X; x++) {
 			tempCirc = &m_points[x][y];
 
-			// Create new point
-			*tempCirc = Point(POINT_RADIUS);
+			// Create new points
+			if (x == 0 || y == 0 || x == (BOARD_SIZE_X - 1) || y == (BOARD_SIZE_Y - 1))
+				m_points[x][y] = Point(POINT_RADIUS, true);
+			else
+				m_points[x][y] = Point(POINT_RADIUS, false);
+
 			tempCirc->setFillColor(sf::Color::Green);
 
 			// set new center
@@ -77,10 +95,10 @@ void Board::initFrame() {
 	const float GATE_LEFT_CORNER_POINT_X =
 		(((BOARD_SIZE_X - 1) / 2) - 1) * DISTANCE_BEETWEN_POINTS + MARGIN;
 
-	const float GATE_RIGHT_CORNER_POINT_X = 
+	const float GATE_RIGHT_CORNER_POINT_X =
 		GATE_LEFT_CORNER_POINT_X + DISTANCE_BEETWEN_POINTS * GATE_SIZE;
 
-	const float RIGHT_CORNER_X = 
+	const float RIGHT_CORNER_X =
 		MARGIN + DISTANCE_BEETWEN_POINTS * (BOARD_SIZE_X - 1);
 
 	const float UPPER_ENDLINE_Y = MARGIN;
@@ -89,7 +107,7 @@ void Board::initFrame() {
 	const float BOTTOM_ENDlINE_Y =
 		MARGIN + DISTANCE_BEETWEN_POINTS * (BOARD_SIZE_Y - 1);
 
-	const float BOTTOM_GATELINE_Y = 
+	const float BOTTOM_GATELINE_Y =
 		MARGIN + DISTANCE_BEETWEN_POINTS * BOARD_SIZE_Y;
 
 

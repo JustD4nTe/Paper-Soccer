@@ -1,6 +1,14 @@
 #pragma once
 #include "Ball.h"
 
+sf::Vector2f Ball::getPosition() {
+	return m_point->getPosition();
+}
+
+bool Ball::isLine(const uint8_t direction) {
+	return m_point->isLine(direction);
+}
+
 void Ball::setNewBall(Point* newBall) {
 	sf::Vector2f oldBallPosition = m_point->getPosition();
 	sf::Vector2f newBallPosition = newBall->getPosition();

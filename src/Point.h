@@ -4,9 +4,13 @@
 class Point : public sf::CircleShape {
 private:
 	uint8_t m_lines = 0b00000000;
+	bool m_isEdge;
+
 public:
-	Point(){};
-	Point(const unsigned point) : sf::CircleShape(point){};
+
+	Point() {}
+	Point(unsigned point, bool isEdge)
+		: sf::CircleShape(point), m_isEdge(isEdge) {};
 
 	void newLine(const uint8_t direction) {
 		m_lines |= direction;
@@ -19,5 +23,9 @@ public:
 	// Is any connections with this point
 	bool isAnyConnections() {
 		return m_lines > 0 ? true : false;
+	}
+
+	bool isEdge() {
+		return m_isEdge;
 	}
 };
