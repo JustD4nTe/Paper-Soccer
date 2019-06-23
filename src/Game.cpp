@@ -80,9 +80,6 @@ sf::Vector2f Game::getPointUnderMouse(const sf::Vector2i mousePos) {
 	const unsigned left = ballPosition.x - DISTANCE_BEETWEN_POINTS;
 	const unsigned right = ballPosition.x + DISTANCE_BEETWEN_POINTS;
 
-	const unsigned rightEdgeOfPitch = MARGIN + ((BOARD_SIZE_X - 1) * DISTANCE_BEETWEN_POINTS);
-	const unsigned bottomEdgeOfPitch = MARGIN + ((BOARD_SIZE_Y - 1) * DISTANCE_BEETWEN_POINTS);
-
 	// searching at all points for the one <3
 	for (unsigned x = 0; x < BOARD_SIZE_X; x++) {
 		for (unsigned y = 0; y < BOARD_SIZE_Y; y++) {
