@@ -14,6 +14,7 @@ private:
 	bool isAnyLineBetweenPoints(const sf::Vector2f ballPos, const sf::Vector2f pointPo);
 	void drawPlayers(sf::RenderWindow* mWindow);
 	void isOwnGoal();
+	bool isAvailableMoves();
 
 public:
 	Game();

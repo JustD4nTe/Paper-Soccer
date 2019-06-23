@@ -53,6 +53,11 @@ void Game::move(const sf::Vector2i mousePos) {
 	if(m_isEnd)
 		isOwnGoal();
 
+	// if there aren't any moves
+	// game is over
+	if(!m_isEnd)
+		m_isEnd = !isAvailableMoves();
+
 	// if there isn't any connections player's turn is end
 	if (!isPlayerShouldNotEndTurn && !m_isEnd) {
 		
@@ -221,4 +226,63 @@ void Game::isOwnGoal() {
 		else
 			m_currentPlayer = m_players[0];
 	}
+}
+
+bool Game::isAvailableMoves() {
+	const sf::Vector2f ballPosition = m_board.getBallPosition();
+	const bool isBallOnTheEdge = m_board.isBallOnTheEdge();
+
+	// area where player can see available move
+	const unsigned up = ballPosition.y - DISTANCE_BEETWEN_POINTS;
+	const unsigned down = ballPosition.y + DISTANCE_BEETWEN_POINTS;
+	const unsigned left = ballPosition.x - DISTANCE_BEETWEN_POINTS;
+	const unsigned right = ballPosition.x + DISTANCE_BEETWEN_POINTS;
+
+	// searching at all points for the one <3
+	for (unsigned x = 0; x < BOARD_SIZE_X; x++) {
+		for (unsigned y = 0; y < BOARD_SIZE_Y; y++) {
+			sf::Vector2f tempPointPos = m_board.getPointPosition(x, y);
+
+			// got (0,0) when we get out of array
+			if (tempPointPos.x == 0 && tempPointPos.y == 0)
+				continue;
+
+			// player shouldn't see over-line of the ball
+			if (tempPointPos == ballPosition)
+				continue;
+
+			// is current point into square of available move?
+			bool isInSquare = (tempPointPos.x >= left && tempPointPos.x <= right)
+				&& (tempPointPos.y >= up && tempPointPos.y <= down);
+
+
+			// player shouldn't move on the edge of football pitch
+			bool isNotEdgeBetweenBallAndPoint = !(isBallOnTheEdge & m_board.isPointOnTheEdge(x, y));
+
+
+			if (isInSquare && isNotEdgeBetweenBallAndPoint
+				&& !isAnyLineBetweenPoints(ballPosition, tempPointPos)) {
+				return true;
+			}
+		}
+	}
+
+	// when we didn't find the one in points
+	// we have to search in gates
+	for (unsigned i = 0; i < 6; i++) {
+		sf::Vector2f tempGatePos = m_board.getGatePosition(i);
+
+		if ((tempGatePos.x >= left && tempGatePos.x <= right)
+			&& (tempGatePos.y >= up && tempGatePos.y <= down)) {
+				return true;
+		}
+	}
+
+	// change player
+	if (m_currentPlayer->m_nr == PLAYER_ONE)
+		m_currentPlayer = m_players[1];
+	else
+		m_currentPlayer = m_players[0];
+
+	return false;
 }
