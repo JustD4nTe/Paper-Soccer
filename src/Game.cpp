@@ -8,15 +8,17 @@ Game::Game() : m_board(Board()) {
 	m_currentPlayer->PlayerTurnStart();
 
 	m_isEnd = false;
+
+	// loading background
+	// if file is missing => don't display it
+	if (m_texture.loadFromFile("background.png")) {
+		m_sprite.setTexture(m_texture);		
+	}
+
+	m_sprite.setTextureRect(sf::IntRect(0, 0, 1024, 800));
 }
 
-void Game::draw(sf::RenderWindow& mWindow,sf::Texture& m_texture) {
-	if (!m_texture.loadFromFile("background.png")) {
-		//display error about missing file
-	}
-	
-	m_sprite.setTexture(m_texture);
-	m_sprite.setTextureRect(sf::IntRect(0, 0, 1024, 800));
+void Game::draw(sf::RenderWindow& mWindow) {
 	mWindow.draw(m_sprite);
 	m_board.drawBoard(&mWindow);
 	drawPlayers(&mWindow);
@@ -26,7 +28,7 @@ void Game::draw(sf::RenderWindow& mWindow,sf::Texture& m_texture) {
 
 // Setting an over-line circle around the point, which mouse is touching (mrrr :)) )
 void Game::hoverPoint(const sf::Vector2i mousePos) {
-	// disable HoverPoint
+	// disable HoverPoint5
 	m_board.toggleHoverPoint();
 
 	// checks if the point is available

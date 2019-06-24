@@ -10,6 +10,7 @@ private:
 	Player* m_players[2];
 	Player* m_currentPlayer;
 	sf::Sprite m_sprite;
+	sf::Texture m_texture;
 	bool m_isEnd;
 
 	sf::Vector2f getPointUnderMouse(const sf::Vector2i mousePos);
@@ -22,7 +23,7 @@ private:
 public:
 	Game();
 
-	void draw(sf::RenderWindow& mWindow,sf::Texture& m_texture);
+	void draw(sf::RenderWindow& mWindow);
 	void hoverPoint(const sf::Vector2i mousePos);
 	void move(const sf::Vector2i mousePos);
 	bool isEnd();
