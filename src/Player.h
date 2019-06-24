@@ -5,6 +5,7 @@
 #include "PlayerName.h"
 
 enum PlayerNr {
+	NONE = 0,
 	PLAYER_ONE = 1,
 	PLAYER_TWO = 2
 };
@@ -20,4 +21,5 @@ public:
 	sf::Text getText();
 	void PlayerTurnStart();
 	void PlayerTurnEnd();
+	std::string getName();
 };

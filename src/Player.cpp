@@ -28,3 +28,7 @@ void Player::PlayerTurnStart() {
 void Player::PlayerTurnEnd() {
 	m_name.disableUnderline();
 }
+
+std::string Player::getName() {
+	return m_name.getName();
+}

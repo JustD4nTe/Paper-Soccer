@@ -9,11 +9,13 @@ Board::Board() {
 	initFrame();
 	initBall();
 	initLines();
+	initGates();
 }
 
 void Board::drawBoard(sf::RenderWindow* hWindow) {
 	drawFrame(hWindow);
 	drawPoints(hWindow);
+	drawGates(hWindow);
 
 	hWindow->draw(m_lines);
 
@@ -29,17 +31,31 @@ sf::Vector2f Board::getPointPosition(const unsigned x, const unsigned y) {
 	return m_points[x][y].getPosition();
 }
 
-void Board::movingTheBall(sf::Vector2f newPositionOfBall) {
+bool Board::movingTheBall(sf::Vector2f newPositionOfBall) {
 	Point* newBall = getPoint(newPositionOfBall);
-	m_ball.setNewBall(newBall);
 
-	m_lines.append(sf::Vertex(
-		newBall->getPosition(),
-		sf::Color::Color(166, 255, 166, 255))
-	);
+	if (newBall->getPosition() != sf::Vector2f(0, 0)) {
+		m_ball.setNewBall(newBall);
+
+		m_lines.append(sf::Vertex(
+			newBall->getPosition(),
+			sf::Color::Color(166, 255, 166, 255))
+		);
+		return false;
+	}
+	else {
+		Gate* newBall = getGate(newPositionOfBall);
+		m_ball.setGoal((Point*)newBall);
+
+		m_lines.append(sf::Vertex(
+			newBall->getPosition(),
+			sf::Color::Color(166, 255, 166, 255))
+		);
+		return true;
+	}
 }
 
-bool Board::isLineOnPoint(const unsigned x, const unsigned y, const uint8_t direction) {
+bool Board::isLineOnPoint(const float x, const float y, const uint8_t direction) {
 	return getPoint(sf::Vector2f(x, y))->isLine(direction);
 }
 
@@ -59,6 +75,26 @@ bool Board::isBouncePosibility(const sf::Vector2f pointPosition) {
 	return (point->isAnyConnections() | point->isEdge());
 }
 
+sf::Vector2f Board::getGatePosition(const unsigned iterator) {
+	return m_gates[iterator].getPosition();
+}
+
+bool Board::isBallOnTheEdge() {
+	return m_ball.isOnTheEdge();
+}
+
+bool Board::isPointOnTheEdge(const unsigned x, const unsigned y) {
+	return m_points[x][y].isEdge();
+}
+
+PlayerNr Board::whoseGate() {
+	for (unsigned i = 0; i < 6; i++) {
+		if (m_gates[i].getPosition() == m_ball.getPosition())
+			return m_gates[i].getPlayer();
+	}
+	return PlayerNr::NONE;
+}
+
 #pragma endregion
 
 #pragma region Private
@@ -66,13 +102,20 @@ bool Board::isBouncePosibility(const sf::Vector2f pointPosition) {
 
 void Board::initPoints() {
 	sf::CircleShape* tempCirc;
-	for (unsigned y = 0; y < BOARD_SIZE_Y; ++y) {
-		for (unsigned x = 0; x < BOARD_SIZE_X; x++) {
+	for (int y = 0; y < BOARD_SIZE_Y; ++y) {
+		for (int x = 0; x < BOARD_SIZE_X; x++) {
 			tempCirc = &m_points[x][y];
 
 			// Create new points
-			if (x == 0 || y == 0 || x == (BOARD_SIZE_X - 1) || y == (BOARD_SIZE_Y - 1))
-				m_points[x][y] = Point(POINT_RADIUS, true);
+			// point in front of gate
+			if (x == (BOARD_SIZE_X - 1) / 2)
+				m_points[x][y] = Point(POINT_RADIUS, false);
+
+			// edges
+			else if (x == 0 || y == 0 || x == (BOARD_SIZE_X - 1) || y == (BOARD_SIZE_Y - 1))
+					m_points[x][y] = Point(POINT_RADIUS, true);
+
+			// other points
 			else
 				m_points[x][y] = Point(POINT_RADIUS, false);
 
@@ -81,8 +124,8 @@ void Board::initPoints() {
 			// set new center
 			tempCirc->setOrigin(POINT_RADIUS, POINT_RADIUS);
 			tempCirc->setPosition(
-				(x * DISTANCE_BEETWEN_POINTS) + MARGIN,
-				(y * DISTANCE_BEETWEN_POINTS) + MARGIN
+				(static_cast<float>(x) * DISTANCE_BEETWEN_POINTS) + MARGIN,
+				(static_cast<float>(y) * DISTANCE_BEETWEN_POINTS) + MARGIN
 			);
 		}
 	}
@@ -158,6 +201,35 @@ void Board::initLines() {
 	m_lines[0].color = sf::Color::Color(166,255,166,255);
 }
 
+void Board::initGates() {
+	const float GATE_LEFT_CORNER_POINT_X =
+		(((BOARD_SIZE_X - 1) / 2) - 1) * DISTANCE_BEETWEN_POINTS + MARGIN;
+
+	const float BOTTOM_ENDlINE_Y =
+		MARGIN + DISTANCE_BEETWEN_POINTS * (BOARD_SIZE_Y - 1);
+
+	// first player's gate
+	for (unsigned i = 0; i < 3; i++) {
+		m_gates[i] = Gate(POINT_RADIUS, PlayerNr::PLAYER_ONE);
+		m_gates[i].setOrigin(POINT_RADIUS, POINT_RADIUS);
+		m_gates[i].setFillColor(sf::Color::Cyan);
+		m_gates[i].setPosition(
+			GATE_LEFT_CORNER_POINT_X + (DISTANCE_BEETWEN_POINTS * i),
+			MARGIN - DISTANCE_BEETWEN_POINTS
+		);
+	}
+
+	// second player's gate
+	for (unsigned i = 3; i < 6; i++) {
+		m_gates[i] = Gate(POINT_RADIUS, PlayerNr::PLAYER_TWO);
+		m_gates[i].setOrigin(POINT_RADIUS, POINT_RADIUS);
+		m_gates[i].setFillColor(sf::Color::Red);
+		m_gates[i].setPosition(
+			GATE_LEFT_CORNER_POINT_X + (DISTANCE_BEETWEN_POINTS * (i - 3)),
+			MARGIN + DISTANCE_BEETWEN_POINTS * BOARD_SIZE_Y
+		);
+	}
+}
 #pragma endregion
 #pragma region Draw
 
@@ -178,6 +250,12 @@ void Board::drawFrame(sf::RenderWindow* hWindow) {
 	m_frame.setFillColor(sf::Color::Color(28,28,28,255));
 }
 
+// Draws points which represent the gate
+void Board::drawGates(sf::RenderWindow* hWindow) {
+	for (unsigned i = 0; i < 6; ++i) {
+		hWindow->draw(m_gates[i]);
+	}
+}
 #pragma endregion
 
 Point* Board::getPoint(const sf::Vector2f pointPos) {
@@ -189,6 +267,15 @@ Point* Board::getPoint(const sf::Vector2f pointPos) {
 	}
 
 	return new Point();
+}
+
+Gate* Board::getGate(const sf::Vector2f gatePos) {
+	for (unsigned i = 0; i < 6; ++i) {
+		if (m_gates[i].getPosition() == gatePos)
+			return &m_gates[i];
+	}
+	
+	return new Gate();
 }
 
 #pragma endregion

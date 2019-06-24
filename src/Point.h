@@ -9,7 +9,7 @@ private:
 public:
 
 	Point() {}
-	Point(unsigned point, bool isEdge)
+	Point(const float point,const bool isEdge)
 		: sf::CircleShape(point), m_isEdge(isEdge) {};
 
 	void newLine(const uint8_t direction) {
