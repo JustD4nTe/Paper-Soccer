@@ -32,7 +32,7 @@ int main() {
 		std::string string = game.getWinner();
 
 		const unsigned fontSize = 50;
-		const unsigned x = string.length() * (fontSize/2);
+		const unsigned x = string.length() * (fontSize - 20);
 
 		sf::RenderWindow endWindow(sf::VideoMode(x, fontSize + 5), "End", sf::Style::None);
 
