@@ -15,7 +15,7 @@ void Game::draw(sf::RenderWindow& mWindow,sf::Texture& m_texture) {
 		//display error about missing file
 	}
 	
-	mWindo.setTexture(m_texture);
+	m_sprite.setTexture(m_texture);
 	m_sprite.setTextureRect(sf::IntRect(0, 0, 1024, 800));
 	mWindow.draw(m_sprite);
 	m_board.drawBoard(&mWindow);
