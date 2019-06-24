@@ -20,7 +20,7 @@ public:
 		return (m_lines & direction);
 	}
 
-	// Is any connections with this point
+	// Are any connections with this point?
 	bool isAnyConnections() {
 		return m_lines > 0 ? true : false;
 	}

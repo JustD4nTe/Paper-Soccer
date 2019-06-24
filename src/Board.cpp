@@ -19,7 +19,7 @@ void Board::drawBoard(sf::RenderWindow* hWindow) {
 
 	hWindow->draw(m_lines);
 
-	// it useless to draw o shape when it have a negative coords
+	// it's useless to draw a shape when it has negative coords
 	if (m_hoverPoint.getPosition().x != -20)
 		hWindow->draw(m_hoverPoint);
 }
@@ -39,7 +39,7 @@ bool Board::movingTheBall(sf::Vector2f newPositionOfBall) {
 
 		m_lines.append(sf::Vertex(
 			newBall->getPosition(),
-			sf::Color::Cyan)
+			sf::Color::Color(166, 255, 166, 255))
 		);
 		return false;
 	}
@@ -49,7 +49,7 @@ bool Board::movingTheBall(sf::Vector2f newPositionOfBall) {
 
 		m_lines.append(sf::Vertex(
 			newBall->getPosition(),
-			sf::Color::Cyan)
+			sf::Color::Color(166, 255, 166, 255))
 		);
 		return true;
 	}
@@ -67,8 +67,8 @@ sf::Vector2f Board::getBallPosition() {
 	return m_ball.getPosition();
 }
 
-// If point have any connections before move
-// player have additional move
+// If the point has any connections before moving
+// the player has additional movement
 bool Board::isBouncePosibility(const sf::Vector2f pointPosition) {
 	Point* point = getPoint(pointPosition);
 
@@ -119,7 +119,7 @@ void Board::initPoints() {
 			else
 				m_points[x][y] = Point(POINT_RADIUS, false);
 
-			tempCirc->setFillColor(sf::Color::Green);
+			tempCirc->setFillColor(sf::Color::Color(166,255,166,255));
 
 			// set new center
 			tempCirc->setOrigin(POINT_RADIUS, POINT_RADIUS);
@@ -132,7 +132,7 @@ void Board::initPoints() {
 }
 
 // Initialize frame with 12 corners
-// it should looks like a football pitch
+// it should look like a football pitch
 void Board::initFrame() {
 	// Some math's magic to have scalable board
 	const float GATE_LEFT_CORNER_POINT_X =
@@ -179,7 +179,7 @@ void Board::initHoverPoint() {
 
 	// it should only over-line a point
 	m_hoverPoint.setFillColor(sf::Color::Transparent);
-	m_hoverPoint.setOutlineColor(sf::Color::Magenta);
+	m_hoverPoint.setOutlineColor(sf::Color::Color(238,238,238,220));
 	m_hoverPoint.setOutlineThickness(2);
 
 	// set center of the point
@@ -198,7 +198,7 @@ void Board::initLines() {
 
 	m_lines.append(sf::Vertex(m_ball.getPosition()));
 
-	m_lines[0].color = sf::Color::Cyan;
+	m_lines[0].color = sf::Color::Color(166,255,166,255);
 }
 
 void Board::initGates() {
@@ -212,7 +212,7 @@ void Board::initGates() {
 	for (unsigned i = 0; i < 3; i++) {
 		m_gates[i] = Gate(POINT_RADIUS, PlayerNr::PLAYER_ONE);
 		m_gates[i].setOrigin(POINT_RADIUS, POINT_RADIUS);
-		m_gates[i].setFillColor(sf::Color::Cyan);
+		m_gates[i].setFillColor(sf::Color::Color(166, 255, 166, 255));
 		m_gates[i].setPosition(
 			GATE_LEFT_CORNER_POINT_X + (DISTANCE_BEETWEN_POINTS * i),
 			MARGIN - DISTANCE_BEETWEN_POINTS
@@ -223,7 +223,7 @@ void Board::initGates() {
 	for (unsigned i = 3; i < 6; i++) {
 		m_gates[i] = Gate(POINT_RADIUS, PlayerNr::PLAYER_TWO);
 		m_gates[i].setOrigin(POINT_RADIUS, POINT_RADIUS);
-		m_gates[i].setFillColor(sf::Color::Red);
+		m_gates[i].setFillColor(sf::Color::Color(166, 255, 166, 255));
 		m_gates[i].setPosition(
 			GATE_LEFT_CORNER_POINT_X + (DISTANCE_BEETWEN_POINTS * (i - 3)),
 			MARGIN + DISTANCE_BEETWEN_POINTS * BOARD_SIZE_Y
@@ -245,6 +245,9 @@ void Board::drawPoints(sf::RenderWindow* hWindow) {
 // Draws frame around board
 void Board::drawFrame(sf::RenderWindow* hWindow) {
 	hWindow->draw(m_frame);
+	m_frame.setOutlineThickness(5);
+	m_frame.setOutlineColor(sf::Color::Color(238, 238, 238, 200));
+	m_frame.setFillColor(sf::Color::Color(28,28,28,255));
 }
 
 // Draws points which represent the gate

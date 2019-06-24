@@ -1,11 +1,11 @@
 #include "PlayerName.h"
 
 PlayerName::PlayerName(const std::string name) : m_name(name) {
-	if (m_font.loadFromFile("arial.ttf")) {
+	if (m_font.loadFromFile("robotomono.ttf")) {
 		m_nameToDisplay.setFont(m_font);
 		m_nameToDisplay.setString(m_name);
 		m_nameToDisplay.setCharacterSize(24);
-		m_nameToDisplay.setFillColor(sf::Color::Blue);
+		m_nameToDisplay.setFillColor(sf::Color::Color(238,238,238,255));
 		m_nameToDisplay.setOrigin((m_name.length() * 24) / 2, 0);
 	}
 

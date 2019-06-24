@@ -6,10 +6,10 @@
 #define WINDOW_RES_Y 800
 
 int main() {
-	sf::RenderWindow mainWindow(sf::VideoMode(WINDOW_RES_X, WINDOW_RES_Y), "Paper-Soccer");
+	sf::RenderWindow mainWindow(sf::VideoMode(WINDOW_RES_X, WINDOW_RES_Y), "Paper-Soccer",
+		sf::Style::Titlebar | sf::Style::Close);
 
 	Game game = Game();
-
 	while (mainWindow.isOpen()) {
 		sf::Event event;
 		while (mainWindow.pollEvent(event)) {
@@ -22,7 +22,6 @@ int main() {
 		}
 
 		game.hoverPoint(sf::Mouse::getPosition(mainWindow));
-
 		game.draw(mainWindow);
 
 		if (game.isEnd())
@@ -39,7 +38,7 @@ int main() {
 
 		sf::Font font = sf::Font();
 		sf::Text text = sf::Text();
-		if (font.loadFromFile("arial.ttf")) {
+		if (font.loadFromFile("robotomono.ttf")) {
 			text.setFont(font);
 			text.setString(string);
 			text.setCharacterSize(fontSize);

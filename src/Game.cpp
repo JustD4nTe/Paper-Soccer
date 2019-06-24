@@ -8,11 +8,18 @@ Game::Game() : m_board(Board()) {
 	m_currentPlayer->PlayerTurnStart();
 
 	m_isEnd = false;
+
+	// loading background
+	// if file is missing => don't display it
+	if (m_texture.loadFromFile("background.png")) {
+		m_sprite.setTexture(m_texture);		
+	}
+
+	m_sprite.setTextureRect(sf::IntRect(0, 0, 1024, 800));
 }
 
 void Game::draw(sf::RenderWindow& mWindow) {
-	mWindow.clear();
-
+	mWindow.draw(m_sprite);
 	m_board.drawBoard(&mWindow);
 	drawPlayers(&mWindow);
 
@@ -21,10 +28,10 @@ void Game::draw(sf::RenderWindow& mWindow) {
 
 // Setting an over-line circle around the point, which mouse is touching (mrrr :)) )
 void Game::hoverPoint(const sf::Vector2i mousePos) {
-	// disable HoverPoint
+	// disable HoverPoint5
 	m_board.toggleHoverPoint();
 
-	// checks if point is available
+	// checks if the point is available
 	sf::Vector2f point = getPointUnderMouse(mousePos);
 
 	// nope
@@ -36,7 +43,8 @@ void Game::hoverPoint(const sf::Vector2i mousePos) {
 
 // Trying to move the ball
 void Game::move(const sf::Vector2i mousePos) {
-	// checks if point is available
+  
+	// checks if the point is available
 	sf::Vector2f point = getPointUnderMouse(mousePos);
 
 	// nope
@@ -44,10 +52,10 @@ void Game::move(const sf::Vector2i mousePos) {
 		return;
 
 
-	// checking if there is any connections with future ball position
+	// checking if there are any connections with future ball position
 	const bool isPlayerShouldNotEndTurn = m_board.isBouncePosibility(point);
 
-	// change position of ball
+	// change position of the ball
 	m_isEnd = m_board.movingTheBall(point);
 
 	if(m_isEnd)
@@ -58,7 +66,7 @@ void Game::move(const sf::Vector2i mousePos) {
 	if(!m_isEnd)
 		m_isEnd = !isAvailableMoves();
 
-	// if there isn't any connections player's turn is end
+	// if there aren't any connections player's turn is end
 	if (!isPlayerShouldNotEndTurn && !m_isEnd) {
 		
 		// end turn
@@ -72,7 +80,7 @@ void Game::move(const sf::Vector2i mousePos) {
 }
 
 // At first searching which point is under mouse
-// then checks if player can move to this point
+// then checks if the player can move to this point
 sf::Vector2f Game::getPointUnderMouse(const sf::Vector2i mousePos) {
 	const sf::Vector2f ballPosition = m_board.getBallPosition();
 	const bool isBallOnTheEdge = m_board.isBallOnTheEdge();

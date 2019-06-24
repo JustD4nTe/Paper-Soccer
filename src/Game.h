@@ -1,5 +1,6 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
 #include "Board.h"
 #include "Player.h"
 
@@ -8,6 +9,8 @@ private:
 	Board m_board;
 	Player* m_players[2];
 	Player* m_currentPlayer;
+	sf::Sprite m_sprite;
+	sf::Texture m_texture;
 	bool m_isEnd;
 
 	sf::Vector2f getPointUnderMouse(const sf::Vector2i mousePos);
