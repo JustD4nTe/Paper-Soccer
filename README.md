@@ -1,6 +1,8 @@
 # Paper-Soccer
 Simple application which implements rules of [Paper soccer](en.wikipedia.org/wiki/Paper_soccer)
 
+![playground](./img/playground.png)
+
 ## Technologies
 * C++
 * SFML 2.5.1
